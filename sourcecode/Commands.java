@@ -975,7 +975,7 @@ public class Commands extends ListenerAdapter{
             String city = sb.toString().substring(0, sb.toString().length()-2);
             String state = args[i+1];
             try{
-                event.getChannel().sendMessage(weatherScrape("https://www.wunderground.com/weather/us/"+state+"/"+city.replaceAll(" ", "+")).build()).reference(event.getMessage()).queue();
+                event.getChannel().sendMessage(weatherScrape(("https://www.wunderground.com/weather/us/"+state+"/"+city.replaceAll(" ", "+")).toLowerCase()).build()).reference(event.getMessage()).queue();
             }
             catch(Exception ex){
                 event.getMessage().addReaction("❌").queue();
@@ -1339,8 +1339,10 @@ public class Commands extends ListenerAdapter{
       String lowTempString = null;
       final String httpsUrl = URL;
       try {
-         final URL url = new URL(httpsUrl);
-         final HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+        final URL url = new URL(httpsUrl);
+         URLConnection con = new URL(URL).openConnection();
+        con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+        con.connect();
          PrintWriter toFile = new PrintWriter(new File("test.test"));
          final BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 
@@ -1487,7 +1489,7 @@ public class Commands extends ListenerAdapter{
               +         "Relative Humidity: "+humidity+"%\n"
               +         "Cloudiness: "+cloudyness);
       eb.setColor(Color.GREEN);
-      (new File("test.test")).delete();
+      //(new File("test.test")).delete();
       return eb;
    }
     private EmbedBuilder gasScrape(String URL){
@@ -1500,7 +1502,9 @@ public class Commands extends ListenerAdapter{
         try{
         final String httpsUrl = URL;
         final URL url = new URL(httpsUrl);
-         final HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+         URLConnection con = new URL(URL).openConnection();
+        con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+        con.connect();
          PrintWriter toFile = new PrintWriter(new File("gas.gas"));
          final BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 
@@ -1620,7 +1624,7 @@ public class Commands extends ListenerAdapter{
         }
         embed.setDescription(sb.toString());
         embed.setColor(Color.GREEN);
-        new File("gas.gas").delete();
+        //new File("gas.gas").delete();
             
         return embed;
     }
@@ -1628,7 +1632,9 @@ public class Commands extends ListenerAdapter{
         try{
         final String httpsUrl = URL;
         final URL url = new URL(httpsUrl);
-         final HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+         URLConnection con = new URL(URL).openConnection();
+        con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+        con.connect();
          PrintWriter toFile = new PrintWriter(new File("puppy.puppy"));
          final BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 
@@ -1652,9 +1658,10 @@ public class Commands extends ListenerAdapter{
                   }
                   temp = fromFile.next();
                   temp = temp.substring(temp.indexOf("\"")+1,temp.lastIndexOf("\""));
+                  temp = "https://www.generatormix.com/" + temp;
               }
           }
-         (new File("puppy.puppy")).delete();
+         //(new File("puppy.puppy")).delete();
           return temp;
         }
         catch(Exception ex){
@@ -1666,7 +1673,9 @@ public class Commands extends ListenerAdapter{
         try{
         final String httpsUrl = URL;
         final URL url = new URL(httpsUrl);
-         final HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+         URLConnection con = new URL(URL).openConnection();
+        con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+        con.connect();
          PrintWriter toFile = new PrintWriter(new File("anagram.anagram"));
          final BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 
