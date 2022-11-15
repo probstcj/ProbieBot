@@ -25,14 +25,16 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.TreeMap;
-import javax.net.ssl.HttpsURLConnection;
+import static jdk.internal.joptsimple.internal.Messages.message;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.MessageEmbed.Field;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -56,6 +58,15 @@ public class Commands extends ListenerAdapter{
         try{
         String[] args = event.getMessage().getContentRaw().split("\\s+");
         // Literally roast
+        if(event.getMessage().getContentRaw().toLowerCase().contains("<@981690057226342430>")){
+            StringBuilder message = new StringBuilder();
+            message.append(event.getChannel().getId());
+            message.append("\n");
+            message.append(event.getMessage().getId());
+            message.append("\n\n");
+            message.append(event.getMessage().getContentRaw());
+            event.getJDA().openPrivateChannelById("540957458944884746").complete().sendMessage(message.toString()).queue();
+        }
         if(event.getAuthor().getId().equals("540957458944884746")&&(event.getMessage().getContentRaw().toLowerCase().contains("litterally") || event.getMessage().getContentRaw().toLowerCase().contains("literally"))){
             if(event.getMessage().getContentRaw().toLowerCase().contains("litterally")){
                 // Roast
@@ -233,6 +244,7 @@ public class Commands extends ListenerAdapter{
             help.addField(ProbieBot.prefix+"puppyme", "This will send you a random picture of a puppy.", false);
             help.addField(ProbieBot.prefix+"anagram Message", "This will send you an anagram of the text after the initial command. Currently the max number of words is 3.", false);
             help.addField(ProbieBot.prefix+"flman [date or no-date]", "This will send you either the most recent Florida Man article, or on a specific date given by the user in the format MM/DD.", false);
+            help.addField(ProbieBot.prefix+"radar [zip code or no args]", "If given no arguments, it will send a radar image of the entire United States. If given a zip code (5 digit format), it will return a radar image of that area.", false);
             help.setFooter("I am a bot beep boop");
             event.getChannel().sendMessage(help.build()).reference(event.getMessage()).queue();
             help.clear();
@@ -281,6 +293,7 @@ public class Commands extends ListenerAdapter{
             help.addField(ProbieBot.prefix+"puppyme", "This will send you a random picture of a puppy.", false);
             help.addField(ProbieBot.prefix+"anagram Message", "This will send you an anagram of the text after the initial command. Currently the max number of words is 3.", false);
             help.addField(ProbieBot.prefix+"flman [date or no-date]", "This will send you either the most recent Florida Man article, or on a specific date given by the user in the format MM/DD.", false);
+            help.addField(ProbieBot.prefix+"radar [zip code or no args]", "If given no arguments, it will send a radar image of the entire United States. If given a zip code (5 digit format), it will return a radar image of that area.", false);
             help.setFooter("I am a bot beep boop");
             event.getAuthor().openPrivateChannel().complete().sendMessage(help.build()).queue();
             help.clear();
@@ -1135,6 +1148,27 @@ public class Commands extends ListenerAdapter{
                 event.getMessage().getReferencedMessage().delete().complete();
             }
         }
+        else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "radar")){
+            if(args.length == 1){
+                event.getChannel().sendMessage("https://radar.weather.gov/ridge/standard/CONUS_loop.gif").reference(event.getMessage()).queue();
+            }
+            else if(args.length == 2){
+                try{
+                    String zip = args[1];
+                    String latlon = latLongScrape(zip);
+                    String lat = latlon.substring(0,latlon.indexOf(","));
+                    String lon = latlon.substring(latlon.indexOf(",")+1);
+                    lon = lon.replaceAll(" ", "");
+                    event.getChannel().sendMessage(radarScrape(("https://forecast.weather.gov/MapClick.php?lat="+lat+"&lon="+lon).replaceAll(" ", "+"))).reference(event.getMessage()).queue();
+                }
+                catch(Exception ex){
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else{
+                event.getMessage().addReaction("❌").queue();
+            }
+        }
     }
     catch (Exception e){
         EmbedBuilder exception = new EmbedBuilder();
@@ -1292,6 +1326,155 @@ public class Commands extends ListenerAdapter{
                 else{}
             }
             else{}
+        }
+    }
+    @Override
+    public void onPrivateMessageReceived(PrivateMessageReceivedEvent event) {
+        if(event.getAuthor().getId().equals("540957458944884746")){
+            String[] args = event.getMessage().getContentRaw().split("\\s+");
+            if(args[0].equalsIgnoreCase(ProbieBot.prefix + "message")){
+                // Given a channel, it will send a message
+                String channelid = null;
+                try{
+                    if(event.getMessage().getReferencedMessage()!=null){
+                        String[] argsref = event.getMessage().getReferencedMessage().getContentRaw().split("\\s+");
+                        channelid = argsref[0];
+                    }
+                    else{
+                        channelid = args[1];
+                    }
+                }
+                catch (ArrayIndexOutOfBoundsException ex){
+                    event.getMessage().addReaction("❌").queue();
+                }
+                if (channelid != null){
+                    TextChannel channel = null;
+                    try{
+                        channel = event.getJDA().getTextChannelById(channelid);
+                    }
+                    catch (Exception ex){
+                        event.getMessage().addReaction("❌").queue();
+                    }
+                    if(channel != null){
+                        StringBuilder message = new StringBuilder();
+                        if(event.getMessage().getReferencedMessage()!=null){
+                            for (int i = 1; i < args.length; i++) {
+                                message.append(args[i]);
+                                if(i!=args.length-1){
+                                    message.append(" ");
+                                }
+                            }
+                            if(message.toString().length()!=0){
+                                channel.sendMessage(message.toString()).queue();
+                            }
+                        }
+                        else{
+                            for (int i = 2; i < args.length; i++) {
+                                message.append(args[i]);
+                                if(i!=args.length-1){
+                                    message.append(" ");
+                                }
+                            }
+                            if(message.toString().length()!=0){
+                                channel.sendMessage(message.toString()).queue();
+                            }
+                        }
+                    }
+                }
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "reply")){
+                // Given a channelid and messageid, it will reply
+                String channelid = null;
+                String messageid = null;
+                try{
+                    if(event.getMessage().getReferencedMessage()!=null){
+                        String[] argsref = event.getMessage().getReferencedMessage().getContentRaw().split("\\s+");
+                        channelid = argsref[0];
+                        messageid = argsref[1];
+                    }
+                    else{
+                        channelid = args[1];
+                        messageid = args[2];
+                    }
+                }
+                catch (ArrayIndexOutOfBoundsException ex){
+                    event.getMessage().addReaction("❌").queue();
+                }
+                if (channelid != null){
+                    TextChannel channel = null;
+                    try{
+                        channel = event.getJDA().getTextChannelById(channelid);
+                    }
+                    catch (Exception ex){
+                        event.getMessage().addReaction("❌").queue();
+                    }
+                    if(channel != null){
+                        StringBuilder message = new StringBuilder();
+                        if(event.getMessage().getReferencedMessage()!=null){
+                            for (int i = 1; i < args.length; i++) {
+                                message.append(args[i]);
+                                if(i!=args.length-1){
+                                    message.append(" ");
+                                }
+                            }
+                            if(message.toString().length()!=0){
+                                channel.sendMessage(message.toString()).referenceById(messageid).queue();
+                            }
+                        }
+                        else{
+                            for (int i = 3; i < args.length; i++) {
+                                message.append(args[i]);
+                                if(i!=args.length-1){
+                                    message.append(" ");
+                                }
+                            }
+                            if(message.toString().length()!=0){
+                                channel.sendMessage(message.toString()).referenceById(messageid).queue();
+                            }
+                        }
+                    }
+                }
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "react")){
+                // Given a channel id and messageid, it will react
+                String channelid = null;
+                String messageid = null;
+                try{
+                    if(event.getMessage().getReferencedMessage()!=null){
+                        String[] argsref = event.getMessage().getReferencedMessage().getContentRaw().split("\\s+");
+                        channelid = argsref[0];
+                        messageid = argsref[1];
+                    }
+                    else{
+                        channelid = args[1];
+                        messageid = args[2];
+                    }
+                }
+                catch (ArrayIndexOutOfBoundsException ex){
+                    event.getMessage().addReaction("❌").queue();
+                }
+                if (channelid != null){
+                    TextChannel channel = null;
+                    try{
+                        channel = event.getJDA().getTextChannelById(channelid);
+                    }
+                    catch (Exception ex){
+                        event.getMessage().addReaction("❌").queue();
+                    }
+                    if(channel != null){
+                        Emote emoji = null;
+                        try{
+                            emoji = event.getMessage().getEmotes().get(0);
+                        }
+                        catch(Exception ex){
+                            event.getMessage().addReaction("❌").queue();
+                        }
+                        if(emoji!=null){
+                            channel.addReactionById(messageid, emoji).queue();
+                        }
+                    }
+                }
+            }
         }
     }
     public String embedToString(List<MessageEmbed> list){
@@ -1777,5 +1960,67 @@ public class Commands extends ListenerAdapter{
         catch(Exception ex){
             return null;
         }
+    }
+    private String radarScrape(String URL){
+        try{
+        final String httpsUrl = URL;
+        final URL url = new URL(httpsUrl);
+         URLConnection con = new URL(URL).openConnection();
+        con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+        con.connect();
+         PrintWriter toFile = new PrintWriter(new File("radar.radar"));
+         final BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+         String input;
+         StringBuilder sb = new StringBuilder();
+         while ((input = br.readLine()) != null){
+           sb.append(input);
+           sb.append("\n");
+         }
+          toFile.append(sb);
+          toFile.close();
+         br.close();
+         Scanner fromFile = new Scanner(new File("radar.radar"));
+         String temp = null;
+         String link = null;
+          while(fromFile.hasNext() && link==null){
+              temp = fromFile.next();
+              if(temp.contains("Radar")){
+                  fromFile.next();
+                  temp = fromFile.next();
+                  if(temp.contains("Satellite")){
+                      temp = fromFile.next();
+                      if(temp.contains("</h4>")){
+                          fromFile.next();
+                          temp = fromFile.next();
+                          link = temp.substring(temp.indexOf("station/")+8,temp.indexOf("/standard"));
+                      }
+                  }
+              }
+          }
+          
+        (new File("radar.radar")).delete();
+        link = "https://radar.weather.gov/ridge/standard/"+link.toUpperCase()+"_loop.gif";
+          return link;
+        }
+        catch(Exception ex){
+            return null;
+        }
+    }
+    private String latLongScrape(String zip){
+        String latlon = null;
+        Scanner scan = null;
+        try{
+            scan = new Scanner(new File("zipcodes.code"));
+        }
+        catch (FileNotFoundException ex){}
+        while(scan.hasNext() && latlon == null){
+            String temp = scan.nextLine();
+            if(temp.contains(zip)){
+                latlon = temp;
+            }
+        }
+        latlon = latlon.substring(latlon.indexOf(",")+1);
+        
+        return latlon;
     }
 }

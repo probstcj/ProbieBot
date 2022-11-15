@@ -56,6 +56,9 @@ There are many features in this bot, and this list will continue to grow. Here i
     - When sent without a date, it will send the most recent Florida man article that can be found.
 - %puppyme
     - Returns a picture of a puppy, via Java web scraping.
+- %radar
+    - If given no arguments, it will return a radar image of CONUS.
+    - If given a zip code, it will return a radar image of the area around that zip code.
 
 ## Limitations
 
@@ -70,4 +73,6 @@ The reason that web scraping was used in most cases was to familiarize myself wi
 In this project, two main libaries have been used:  
 [JDA Discord - 4.4.0_352](https://github.com/DV8FromTheWorld/JDA) - This allows the program to interact with the Discord API and controls the message interface of the bot and the server. This is the main package used in this project.  
 
-[JSoup-1.15.2](https://jsoup.org/) - This library allows Java to parse web pages in HTML and is used in web scraping.
+[JSoup-1.15.2](https://jsoup.org/) - This library allows Java to parse web pages in HTML and is used in web scraping.  
+
+[All Zip Codes With Their Corresponding Latitude and Longitude Coordinates](https://gist.github.com/erichurst/7882666) - This file allows for the %radar command to work properly.
