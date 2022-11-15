@@ -59,6 +59,9 @@ There are many features in this bot, and this list will continue to grow. Here i
 - %radar
     - If given no arguments, it will return a radar image of CONUS.
     - If given a zip code, it will return a radar image of the area around that zip code.
+- %latex
+    - If given no arguments, it will return a PNG image (1000 dpi) of the LaTeX expression in white text
+    - If given color as an argument, it will return a PNG image (1000 dpi) of the LaTeX expression in that color.
 
 ## Limitations
 
@@ -75,4 +78,4 @@ In this project, two main libaries have been used:
 
 [JSoup-1.15.2](https://jsoup.org/) - This library allows Java to parse web pages in HTML and is used in web scraping.  
 
-[All Zip Codes With Their Corresponding Latitude and Longitude Coordinates](https://gist.github.com/erichurst/7882666) - This file allows for the %radar command to work properly.
+[All Zip Codes With Their Corresponding Latitude and Longitude Coordinates](https://gist.github.com/erichurst/7882666) - This file allows for the %radar command to work properly. This file is slightly edited to work with the program properly.

@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,6 +17,8 @@ import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -25,7 +28,6 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.TreeMap;
-import static jdk.internal.joptsimple.internal.Messages.message;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.GuildChannel;
@@ -245,6 +247,7 @@ public class Commands extends ListenerAdapter{
             help.addField(ProbieBot.prefix+"anagram Message", "This will send you an anagram of the text after the initial command. Currently the max number of words is 3.", false);
             help.addField(ProbieBot.prefix+"flman [date or no-date]", "This will send you either the most recent Florida Man article, or on a specific date given by the user in the format MM/DD.", false);
             help.addField(ProbieBot.prefix+"radar [zip code or no args]", "If given no arguments, it will send a radar image of the entire United States. If given a zip code (5 digit format), it will return a radar image of that area.", false);
+            help.addField(ProbieBot.prefix+"latex [color or no color]", "If you want expression to be colored, put a comma after the color, then LaTeX code behind it. Default is white.", false);
             help.setFooter("I am a bot beep boop");
             event.getChannel().sendMessage(help.build()).reference(event.getMessage()).queue();
             help.clear();
@@ -291,9 +294,15 @@ public class Commands extends ListenerAdapter{
             help.addField(ProbieBot.prefix+"addbday", "This will add your birthday to the list of birthdays to be announced. Please make sure it is correct before adding it, as you cannot change it once it is in. If it needs to be changed, please let my owner know and he can delete it manually.", false);
             help.addField(ProbieBot.prefix+"code", "This will DM you my source code (edited to make sure you hooligans don't steal my UAuth Key...)", false);
             help.addField(ProbieBot.prefix+"puppyme", "This will send you a random picture of a puppy.", false);
+            help.setFooter("I am a bot beep boop");
+            event.getAuthor().openPrivateChannel().complete().sendMessage(help.build()).queue();
+            help.clear();
+            help.setColor(Color.RED);
+            help.setTitle("Help Page 2");
             help.addField(ProbieBot.prefix+"anagram Message", "This will send you an anagram of the text after the initial command. Currently the max number of words is 3.", false);
             help.addField(ProbieBot.prefix+"flman [date or no-date]", "This will send you either the most recent Florida Man article, or on a specific date given by the user in the format MM/DD.", false);
             help.addField(ProbieBot.prefix+"radar [zip code or no args]", "If given no arguments, it will send a radar image of the entire United States. If given a zip code (5 digit format), it will return a radar image of that area.", false);
+            help.addField(ProbieBot.prefix+"latex [color or no color]", "If you want expression to be colored, put a comma after the color, then LaTeX code behind it. Default is white.", false);
             help.setFooter("I am a bot beep boop");
             event.getAuthor().openPrivateChannel().complete().sendMessage(help.build()).queue();
             help.clear();
@@ -1159,7 +1168,10 @@ public class Commands extends ListenerAdapter{
                     String lat = latlon.substring(0,latlon.indexOf(","));
                     String lon = latlon.substring(latlon.indexOf(",")+1);
                     lon = lon.replaceAll(" ", "");
-                    event.getChannel().sendMessage(radarScrape(("https://forecast.weather.gov/MapClick.php?lat="+lat+"&lon="+lon).replaceAll(" ", "+"))).reference(event.getMessage()).queue();
+                    File gif = downloadFile(radarScrape(("https://forecast.weather.gov/MapClick.php?lat="+lat+"&lon="+lon).replaceAll(" ", "+")), "radar.gif");
+                    event.getChannel().sendFile(gif).reference(event.getMessage()).queue();
+                    new File("radar.gif").delete();
+                    
                 }
                 catch(Exception ex){
                     event.getMessage().addReaction("❌").queue();
@@ -1167,6 +1179,52 @@ public class Commands extends ListenerAdapter{
             }
             else{
                 event.getMessage().addReaction("❌").queue();
+            }
+        }
+        else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "latex")){
+            // String: https://latex.codecogs.com/png.image?\tiny&space;\dpi{1000}\color{INSERT COLOR}LATEX
+            // Example: https://latex.codecogs.com/png.image?\tiny&space;\dpi{1000}\color{white}&space;x&space;=&space;\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+            if (args.length==1){
+                event.getMessage().addReaction("❌").queue();
+            }
+            else{
+                String URL = "https://latex.codecogs.com/png.image?\\tiny\\dpi{1000}\\color{LC}{LATEX}";
+                if(args[1].equalsIgnoreCase("white,") || 
+                        args[1].equalsIgnoreCase("black,") ||
+                        args[1].equalsIgnoreCase("red,") ||
+                        args[1].equalsIgnoreCase("green,") ||
+                        args[1].equalsIgnoreCase("blue,") ||
+                        args[1].equalsIgnoreCase("cyan,") ||
+                        args[1].equalsIgnoreCase("magenta,") ||
+                        args[1].equalsIgnoreCase("yellow,")){
+                    String message = event.getMessage().getContentRaw();
+                    message = message.substring(message.indexOf(",")+1);
+                    String latex = (message.replaceAll(" ", "&space;")).replace("\n", "&space;");
+                    URL = (URL.replace("{LC}", "{" + args[1].substring(0,args[1].length()-1) + "}")).replace("{LATEX}", latex);
+                    if(latex.length()>1024){
+                        event.getMessage().addReaction("❌").queue();
+                        event.getChannel().sendMessage("LaTeX String is Too Long!");
+                    }
+                    else{
+                        event.getChannel().sendMessage(URL).reference(event.getMessage()).queue();
+                    }
+                }
+                else if(args[1].contains(",")){
+                    event.getMessage().addReaction("❌").queue();
+                }
+                else{ // Default white
+                    String message = event.getMessage().getContentRaw();
+                    message = message.substring(message.indexOf("%latex")+6);
+                    String latex = (message.replaceAll(" ", "&space;")).replace("\n", "&space;");
+                    URL = (URL.replace("{LC}", "{" + "white" + "}")).replace("{LATEX}", latex);
+                    if(latex.length()>1024){
+                        event.getMessage().addReaction("❌").queue();
+                        event.getChannel().sendMessage("LaTeX String is Too Long!").reference(event.getMessage()).queue();
+                    }
+                    else{
+                        event.getChannel().sendMessage(URL).reference(event.getMessage()).queue();
+                    }
+                }
             }
         }
     }
@@ -2015,12 +2073,23 @@ public class Commands extends ListenerAdapter{
         catch (FileNotFoundException ex){}
         while(scan.hasNext() && latlon == null){
             String temp = scan.nextLine();
-            if(temp.contains(zip)){
+            if(temp.contains(zip+",")){
                 latlon = temp;
             }
         }
         latlon = latlon.substring(latlon.indexOf(",")+1);
         
         return latlon;
+    }
+    private File downloadFile(String URL, String name){
+        try{
+            URL website = new URL(URL);
+            ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+            FileOutputStream fos = new FileOutputStream(name);
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            fos.close();
+        }
+        catch(IOException e){}
+        return new File(name);
     }
 }
