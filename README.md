@@ -62,6 +62,8 @@ There are many features in this bot, and this list will continue to grow. Here i
 - %latex
     - If given no arguments, it will return a PNG image (1000 dpi) of the LaTeX expression in white text
     - If given color as an argument, it will return a PNG image (1000 dpi) of the LaTeX expression in that color.
+- %emojiconv
+    - Converts an Emote on Discord to either a PNG (if non-animated) or a gif (if animated)
 
 ## Limitations
 

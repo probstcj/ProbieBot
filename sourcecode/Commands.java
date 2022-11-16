@@ -1216,6 +1216,9 @@ public class Commands extends ListenerAdapter{
                     String message = event.getMessage().getContentRaw();
                     message = message.substring(message.indexOf("%latex")+6);
                     String latex = (message.replaceAll(" ", "&space;")).replace("\n", "&space;");
+                    while(latex.contains("&space;&space;")){
+                        latex = latex.replaceAll("&space;&space;", "&space;");
+                    }
                     URL = (URL.replace("{LC}", "{" + "white" + "}")).replace("{LATEX}", latex);
                     if(latex.length()>1024){
                         event.getMessage().addReaction("❌").queue();
@@ -1225,6 +1228,24 @@ public class Commands extends ListenerAdapter{
                         event.getChannel().sendMessage(URL).reference(event.getMessage()).queue();
                     }
                 }
+            }
+        }
+        else if ((args[0].equalsIgnoreCase(ProbieBot.prefix + "emojiconv"))){
+            if(args.length!=2){
+                event.getMessage().addReaction("❌").queue();
+            }
+            else{
+                String url = event.getMessage().getEmotes().get(0).getImageUrl();
+                String name = null;
+                if(event.getMessage().getEmotes().get(0).isAnimated()){
+                    name = "emoji.gif";
+                }
+                else{
+                    name = "emoji.png";
+                }
+                File png = downloadFile(url,name);
+                event.getChannel().sendFile(png).reference(event.getMessage()).queue();
+                new File(name).delete();
             }
         }
     }
