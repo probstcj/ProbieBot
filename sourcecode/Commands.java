@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -70,6 +71,7 @@ public class Commands extends ListenerAdapter{
             event.getJDA().openPrivateChannelById("540957458944884746").complete().sendMessage(message.toString()).queue();
         }
         if(event.getAuthor().getId().equals("540957458944884746")&&(event.getMessage().getContentRaw().toLowerCase().contains("litterally") || event.getMessage().getContentRaw().toLowerCase().contains("literally"))){
+            event.getChannel().sendTyping().queue();
             if(event.getMessage().getContentRaw().toLowerCase().contains("litterally")){
                 // Roast
                 Scanner scan = null;
@@ -130,6 +132,7 @@ public class Commands extends ListenerAdapter{
         // Info{
         
         if (args[0].equalsIgnoreCase(ProbieBot.prefix + "info")) {
+            statTrack(ProbieBot.prefix+"info");
             event.getChannel().sendTyping().queue();
             EmbedBuilder info = new EmbedBuilder();
             info.setTitle("ProbieBot Information");
@@ -145,6 +148,7 @@ public class Commands extends ListenerAdapter{
         }
         // Help
         else if (args[0].equalsIgnoreCase(ProbieBot.prefix + "help")) {
+            statTrack(ProbieBot.prefix+"help");
             EmbedBuilder help = new EmbedBuilder();
             help.setColor(Color.RED.brighter());
             help.setTitle("ProbieBot Help Categories:");
@@ -163,6 +167,7 @@ public class Commands extends ListenerAdapter{
             help.clear();
         }
         else if (args[0].equalsIgnoreCase(ProbieBot.prefix + "helpwhois")) {
+            statTrack(ProbieBot.prefix+"helpwhois");
             event.getChannel().sendTyping().queue();
             EmbedBuilder help = new EmbedBuilder();
             help.setColor(Color.RED.brighter());
@@ -176,6 +181,7 @@ public class Commands extends ListenerAdapter{
             help.clear();
         }
         else if (args[0].equalsIgnoreCase(ProbieBot.prefix + "helpquote")) {
+            statTrack(ProbieBot.prefix+"helpquote");
             event.getChannel().sendTyping().queue();
             EmbedBuilder help = new EmbedBuilder();
             help.setColor(Color.RED.brighter());
@@ -189,6 +195,7 @@ public class Commands extends ListenerAdapter{
             help.clear();
         }
         else if (args[0].equalsIgnoreCase(ProbieBot.prefix + "helpcounting")) {
+            statTrack(ProbieBot.prefix+"helpcounting");
             event.getChannel().sendTyping().queue();
             EmbedBuilder help = new EmbedBuilder();
             help.setColor(Color.RED.brighter());
@@ -218,6 +225,7 @@ public class Commands extends ListenerAdapter{
             help.clear();
         }
         else if (args[0].equalsIgnoreCase(ProbieBot.prefix + "helptarotqueue")) {
+            statTrack(ProbieBot.prefix+"helptarotqueue");
             event.getChannel().sendTyping().queue();
             EmbedBuilder help = new EmbedBuilder();
             help.setColor(Color.RED.brighter());
@@ -231,6 +239,7 @@ public class Commands extends ListenerAdapter{
             help.clear();
         }
         else if (args[0].equalsIgnoreCase(ProbieBot.prefix + "helpmisc")) {
+            statTrack(ProbieBot.prefix+"helpmisc");
             event.getChannel().sendTyping().queue();
             EmbedBuilder help = new EmbedBuilder();
             help.setColor(Color.RED.brighter());
@@ -253,6 +262,7 @@ public class Commands extends ListenerAdapter{
             help.clear();
         }
         else if (args[0].equalsIgnoreCase(ProbieBot.prefix + "helpmsg")) {
+            statTrack(ProbieBot.prefix+"helpmsg");
             event.getChannel().sendTyping().queue();
             EmbedBuilder help = new EmbedBuilder();
             help.setColor(Color.RED.brighter());
@@ -265,6 +275,7 @@ public class Commands extends ListenerAdapter{
             help.clear();
         }
         else if (args[0].equalsIgnoreCase(ProbieBot.prefix + "helpall")) {
+            statTrack(ProbieBot.prefix+"helpall");
             event.getChannel().sendTyping().queue();
             EmbedBuilder help = new EmbedBuilder();
             help.setColor(Color.RED.brighter());
@@ -313,7 +324,7 @@ public class Commands extends ListenerAdapter{
         }
         // Roast
         else if (args[0].equalsIgnoreCase(ProbieBot.prefix + "roast")){
-            
+            statTrack(ProbieBot.prefix+"roast");
             // How to get messages by message ID
             //System.out.println(event.getChannel().retrieveMessageById(args[1]).complete().getContentRaw());
             EmbedBuilder roast = new EmbedBuilder();
@@ -322,6 +333,8 @@ public class Commands extends ListenerAdapter{
             
             if(args.length != 2){
                 event.getMessage().addReaction("❌").queue();
+                event.getChannel().sendMessage("Please use the command in the following format:\n"
+                                             + "`%roast [@mention]`").reference(event.getMessage()).queue();
             }
             else if(args[1].startsWith("<@") && args[1].endsWith(">")){
                 event.getChannel().sendTyping().queue();
@@ -341,12 +354,15 @@ public class Commands extends ListenerAdapter{
         }
         // Who is
          else if (args[0].equalsIgnoreCase(ProbieBot.prefix + "whois")){
+             statTrack(ProbieBot.prefix+"whois");
              EmbedBuilder description = new EmbedBuilder();
             description.setColor(Color.RED.brighter());
             User whois = null;
             String user = null;
             if(args.length != 2){
                 event.getMessage().addReaction("❌").queue();
+                event.getChannel().sendMessage("Please use the command in the following format:\n"
+                                             + "`%whois [@mention]`").reference(event.getMessage()).queue();
             }
             else if(args[1].startsWith("<@") && args[1].endsWith(">")){
                 event.getChannel().sendTyping().queue();
@@ -387,12 +403,15 @@ public class Commands extends ListenerAdapter{
          }
          // Add Who is
          else if (args[0].equalsIgnoreCase(ProbieBot.prefix + "addwhois")){
+             statTrack(ProbieBot.prefix+"addwhois");
              EmbedBuilder description = new EmbedBuilder();
             description.setColor(Color.RED.brighter());
             User whois = null;
             String user = null;
             if(args.length == 1){
                 event.getMessage().addReaction("❌").queue();
+                event.getChannel().sendMessage("Please use the command in the following format:\n"
+                                             + "`%addwhois [Any text]`").reference(event.getMessage()).queue();
             }
             else if(args[1].startsWith("[") && args[args.length-1].endsWith("]")){
                 event.getChannel().sendTyping().queue();
@@ -469,12 +488,15 @@ public class Commands extends ListenerAdapter{
          }
          // Edit Who is
          else if (args[0].equalsIgnoreCase(ProbieBot.prefix + "editwhois")){
+             statTrack(ProbieBot.prefix+"editwhois");
             EmbedBuilder description = new EmbedBuilder();
             description.setColor(Color.RED.brighter());
             User whois = null;
             String user = null;
             if(args.length == 1){
                 event.getMessage().addReaction("❌").queue();
+                event.getChannel().sendMessage("Please use the command in the following format:\n"
+                                             + "`%editwhois [Any Text]`").reference(event.getMessage()).queue();
             }
             else if(args[1].startsWith("[") && args[args.length-1].endsWith("]")){
                 event.getChannel().sendTyping().queue();
@@ -535,12 +557,15 @@ public class Commands extends ListenerAdapter{
          }
         // Delete Who is
          else if (args[0].equalsIgnoreCase(ProbieBot.prefix + "deletewhois")){
+             statTrack(ProbieBot.prefix+"deletewhois");
               EmbedBuilder description = new EmbedBuilder();
             description.setColor(Color.RED.brighter());
             User whois = null;
             String user = null;
             if(args.length != 1){
                 event.getMessage().addReaction("❌").queue();
+                event.getChannel().sendMessage("Please use the command in the following format:\n"
+                                             + "`%deletewhois`").reference(event.getMessage()).queue();
             }
             else if(args.length == 1){
                 event.getChannel().sendTyping().queue();
@@ -595,10 +620,13 @@ public class Commands extends ListenerAdapter{
          }
         // Add Quote
          else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "addquote")){
+             statTrack(ProbieBot.prefix+"addquote");
             EmbedBuilder quote = new EmbedBuilder();
             User quoter=null, quotee=null;
             String userQuoter=null, userQuotee=null;
             if(args.length ==1 && event.getMessage().getReferencedMessage()!=null){
+
+                event.getChannel().sendTyping().queue();
                 quoter = event.getAuthor();
                 userQuoter = quoter.getId();
                 quotee = event.getMessage().getReferencedMessage().getAuthor();
@@ -672,10 +700,11 @@ public class Commands extends ListenerAdapter{
          }
          // Delete Quote
          else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "deletequote")){
-             event.getChannel().sendTyping().queue();
+             statTrack(ProbieBot.prefix+"deletequote");
              User deleter = event.getAuthor();
              String user=deleter.getId();
              if(args.length==2){
+                event.getChannel().sendTyping().queue();
                  try{
                      int quoteNumber = Integer.parseInt(args[1]);
                      Scanner find = null;
@@ -751,6 +780,7 @@ public class Commands extends ListenerAdapter{
          }
          // Quotes
          else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "quotes")){
+             statTrack(ProbieBot.prefix+"quotes");
              if(args.length==2){
                 String user = null;
                 User whois = null;
@@ -796,7 +826,9 @@ public class Commands extends ListenerAdapter{
          }
          // List Quotes
          else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "listquotes")){
+             statTrack(ProbieBot.prefix+"listquotes");
             if (args.length == 2 || args.length == 3){
+                event.getChannel().sendTyping().queue();
                 if(args.length ==2){
                     try{
                         int reqQuote = Integer.parseInt(args[1]);
@@ -906,6 +938,8 @@ public class Commands extends ListenerAdapter{
          }
          //Tarot queue
         else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "tarotqueue")){
+            statTrack(ProbieBot.prefix+"tarotqueue");
+            event.getChannel().sendTyping().queue();
             EmbedBuilder queue = new EmbedBuilder();
             queue.setColor(Color.BLUE.brighter());
             StringBuilder sb = new StringBuilder();
@@ -932,6 +966,8 @@ public class Commands extends ListenerAdapter{
         }
         // Add to Tarot queue
         else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "addtarotqueue")){
+            statTrack(ProbieBot.prefix+"addtarotqueue");
+            event.getChannel().sendTyping().queue();
             if(!tarotQueue.contains(event.getAuthor()))
                 tarotQueue.add(event.getAuthor());
             if(tarotQueue.contains(event.getAuthor())){
@@ -943,6 +979,8 @@ public class Commands extends ListenerAdapter{
         }
         //Remove from Tarot queue
         else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "deletetarotqueue")){
+            statTrack(ProbieBot.prefix+"deletetarotqueue");
+            event.getChannel().sendTyping().queue();
             if(tarotQueue.contains(event.getAuthor())){
                 tarotQueue.remove(event.getAuthor());
                 event.getMessage().addReaction("✅").queue();
@@ -985,26 +1023,14 @@ public class Commands extends ListenerAdapter{
         }
         // Weather
         else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "weather")){
-            StringBuilder sb = new StringBuilder();
-            int i = 0;
-            do{
-                i++;
-                sb.append(args[i]);
-                sb.append(" ");
-                
-            }
-            while(!args[i].contains(","));
-            String city = sb.toString().substring(0, sb.toString().length()-2);
-            String state = args[i+1];
-            try{
-                event.getChannel().sendMessage(weatherScrape(("https://www.wunderground.com/weather/us/"+state+"/"+city.replaceAll(" ", "+")).toLowerCase()).build()).reference(event.getMessage()).queue();
-            }
-            catch(Exception ex){
+            if(args.length< 3){
                 event.getMessage().addReaction("❌").queue();
+                event.getChannel().sendMessage("Please use the command in the following format:\n"
+                                             + "`%weather City, ST`\n (There must be a space after comma)").reference(event.getMessage()).queue();
             }
-        }
-        else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "gas")){
-            try{
+            else{
+                statTrack(ProbieBot.prefix+"weather");
+                event.getChannel().sendTyping().queue();
                 StringBuilder sb = new StringBuilder();
                 int i = 0;
                 do{
@@ -1016,17 +1042,51 @@ public class Commands extends ListenerAdapter{
                 while(!args[i].contains(","));
                 String city = sb.toString().substring(0, sb.toString().length()-2);
                 String state = args[i+1];
-                event.getChannel().sendMessage(gasScrape("https://www.gasbuddy.com/home?search="+city.replaceAll(" ", "+")+"+"+state+"&fuel=1").build()).reference(event.getMessage()).queue();
+                try{
+                    event.getChannel().sendMessage(weatherScrape(("https://www.wunderground.com/weather/us/"+state+"/"+city.replaceAll(" ", "+")).toLowerCase()).build()).reference(event.getMessage()).queue();
+                }
+                catch(Exception ex){
+                    event.getMessage().addReaction("❌").queue();
+                }
             }
-            catch(Exception ex){
+        }
+        else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "gas")){
+            if(args.length < 3){
                 event.getMessage().addReaction("❌").queue();
+                event.getChannel().sendMessage("Please use the command in the following format:\n"
+                                             + "`%gas City, ST`\n (There must be a space after comma)").reference(event.getMessage()).queue();
+            }
+            else{
+                statTrack(ProbieBot.prefix+"gas");
+                event.getChannel().sendTyping().queue();
+                try{
+                    StringBuilder sb = new StringBuilder();
+                    int i = 0;
+                    do{
+                        i++;
+                        sb.append(args[i]);
+                        sb.append(" ");
+
+                    }
+                    while(!args[i].contains(","));
+                    String city = sb.toString().substring(0, sb.toString().length()-2);
+                    String state = args[i+1];
+                    event.getChannel().sendMessage(gasScrape("https://www.gasbuddy.com/home?search="+city.replaceAll(" ", "+")+"+"+state+"&fuel=1").build()).reference(event.getMessage()).queue();
+                }
+                catch(Exception ex){
+                    event.getMessage().addReaction("❌").queue();
+                }
             }
         }
         else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "suggest")){
+            statTrack(ProbieBot.prefix+"suggest");
             if(args.length==1){
                 event.getMessage().addReaction("❌").queue();
+                event.getChannel().sendMessage("Please use the command in the following format:\n"
+                                             + "`%Suggest [Any Text]`").reference(event.getMessage()).queue();
             }
             else{
+                event.getChannel().sendTyping().queue();
                 StringBuilder sb = new StringBuilder();
                 sb.append("From ");
                 sb.append(event.getAuthor().getName());
@@ -1047,6 +1107,8 @@ public class Commands extends ListenerAdapter{
             }
         }
         else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "addbday")){
+            statTrack(ProbieBot.prefix+"addbday");
+            event.getChannel().sendTyping().queue();
             boolean correctFormat = true;
             try{
                 Integer.parseInt(args[1].substring(0,4));
@@ -1104,8 +1166,13 @@ public class Commands extends ListenerAdapter{
         }
         // Florida Man
         else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "flman")){
+            statTrack(ProbieBot.prefix+"flman");
+            event.getChannel().sendTyping().queue();
             if(args.length>3){
                 event.getMessage().addReaction("❌").queue();
+                event.getChannel().sendMessage("Please use the command in the following format(s):\n"
+                                             + "`%flman MM/DD` for an article on a certain day\n"
+                                             + "`%flman` for most recent article").reference(event.getMessage()).queue();
             }
             else if(args.length == 2){
                 try{
@@ -1123,6 +1190,8 @@ public class Commands extends ListenerAdapter{
         }
         // Source code
         else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "code")){
+            statTrack(ProbieBot.prefix+"code");
+            event.getChannel().sendTyping().queue();
             event.getAuthor().openPrivateChannel().complete().sendFile(new File("ProbieBotPublic.java")).queue();
             event.getAuthor().openPrivateChannel().complete().sendFile(new File("Commands.java")).queue();
             event.getAuthor().openPrivateChannel().complete().sendFile(new File("GasPrice.java")).queue();
@@ -1135,6 +1204,8 @@ public class Commands extends ListenerAdapter{
             embed.clear();
         }
         else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "puppyme")){
+            statTrack(ProbieBot.prefix+"puppyme");
+            event.getChannel().sendTyping().queue();
             try{
                 event.getChannel().sendMessage(puppyScrape("https://www.generatormix.com/random-dog-generator?number=1")).reference(event.getMessage()).queue();
             }
@@ -1143,8 +1214,12 @@ public class Commands extends ListenerAdapter{
             }
         }
         else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "anagram")){
+            statTrack(ProbieBot.prefix+"anagram");
+            event.getChannel().sendTyping().queue();
             if(args.length>4 || args.length==1){
                 event.getMessage().addReaction("❌").queue();
+                event.getChannel().sendMessage("Please use the command in the following format(s):\n"
+                                             + "`%anagram [Any text less than 4 words]`").reference(event.getMessage()).queue();
             }
             else{
                 String words = event.getMessage().getContentRaw().substring(event.getMessage().getContentRaw().indexOf(" ")+1);
@@ -1158,8 +1233,14 @@ public class Commands extends ListenerAdapter{
             }
         }
         else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "radar")){
+            statTrack(ProbieBot.prefix+"radar");
+            event.getChannel().sendTyping().queue();
             if(args.length == 1){
-                event.getChannel().sendMessage("https://radar.weather.gov/ridge/standard/CONUS_loop.gif").reference(event.getMessage()).queue();
+                String URL = "https://radar.weather.gov/ridge/standard/CONUS_loop.gif";
+                String name = "radar.gif";
+                File gif = downloadFile(URL, name);
+                event.getChannel().sendFile(gif).reference(event.getMessage()).queue();
+                new File(name).delete();
             }
             else if(args.length == 2){
                 try{
@@ -1179,13 +1260,23 @@ public class Commands extends ListenerAdapter{
             }
             else{
                 event.getMessage().addReaction("❌").queue();
+                event.getChannel().sendMessage("Please use the command in the following format(s):\n"
+                                             + "`%radar [zip code]` for an radar of a certain area\n"
+                                             + "`%radar` for radar of CONUS").reference(event.getMessage()).queue();
+            
             }
         }
         else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "latex")){
+            statTrack(ProbieBot.prefix+"latex");
+            event.getChannel().sendTyping().queue();
             // String: https://latex.codecogs.com/png.image?\tiny&space;\dpi{1000}\color{INSERT COLOR}LATEX
             // Example: https://latex.codecogs.com/png.image?\tiny&space;\dpi{1000}\color{white}&space;x&space;=&space;\frac{-b\pm\sqrt{b^2-4ac}}{2a}
             if (args.length==1){
                 event.getMessage().addReaction("❌").queue();
+                event.getChannel().sendMessage("Please use the command in the following format(s):\n"
+                                             + "`%latex color, [code]` for equation in color\n"
+                                             + "`%latex [code]` for equation in white").reference(event.getMessage()).queue();
+            
             }
             else{
                 String URL = "https://latex.codecogs.com/png.image?\\tiny\\dpi{1000}\\color{LC}{LATEX}";
@@ -1211,6 +1302,8 @@ public class Commands extends ListenerAdapter{
                 }
                 else if(args[1].contains(",")){
                     event.getMessage().addReaction("❌").queue();
+                    event.getChannel().sendMessage("Invalid color.").reference(event.getMessage()).queue();
+            
                 }
                 else{ // Default white
                     String message = event.getMessage().getContentRaw();
@@ -1230,22 +1323,379 @@ public class Commands extends ListenerAdapter{
                 }
             }
         }
-        else if ((args[0].equalsIgnoreCase(ProbieBot.prefix + "emojiconv"))){
-            if(args.length!=2){
+        else if((args[0].equalsIgnoreCase(ProbieBot.prefix + "resistor"))){
+            //statTrack(ProbieBot.prefix+"resistor");
+            event.getChannel().sendTyping().queue();
+            if(args.length<2){
                 event.getMessage().addReaction("❌").queue();
             }
             else{
-                String url = event.getMessage().getEmotes().get(0).getImageUrl();
-                String name = null;
-                if(event.getMessage().getEmotes().get(0).isAnimated()){
-                    name = "emoji.gif";
+                EmbedBuilder embed = new EmbedBuilder();
+                switch(args.length){
+                    case 2:
+                        break;
+                    case 3:
+                        boolean num = false;
+                        for (int i = 0; i < args[1].length() && !num; i++) {
+                            try{
+                                Integer.parseInt(""+args[1].charAt(i));
+                                num = true;
+                            }
+                            catch (NumberFormatException ex){}
+                        }
+                        int bandNum = 0;
+                        if(num){
+                            try{
+                                bandNum = Integer.parseInt(args[2]);
+                            }
+                            catch(NumberFormatException ex){}
+                        }
+                        if(num && bandNum != 0){
+                            switch(bandNum){
+                                case 3:
+                                    boolean isNum1 = true;
+                                    String value1 = "";
+                                    int index1 = 0;
+                                    String multLet = null;
+                                    while(isNum1){
+                                        try{
+                                            if(args[1].charAt(index1) == '.'){
+                                                index1++;
+                                                value1 += ".";
+                                            }
+                                            else{
+                                                value1 += Integer.parseInt(""+args[1].charAt(index1++));
+                                            }
+                                        }
+                                        catch (NumberFormatException ex){
+                                            isNum1 = false;
+                                            multLet = ""+args[1].charAt(index1-1);
+                                            
+                                        }
+                                    }
+                                    double numValue = Double.parseDouble(value1);
+                                    int timesMult = 0;
+                                    boolean rounded = false;
+                                    int timesDiv = 0;
+                                    while(numValue > 10){
+                                        numValue /= 10;
+                                        timesDiv++;
+                                    }
+                                    while(!rounded){
+                                        if(numValue <= 10){
+                                            numValue *= 10;
+                                            timesMult++;
+                                        }
+                                        else{
+                                            numValue = Math.round(numValue);
+                                            numValue /= (Math.pow(10, timesMult));
+                                            rounded = true;
+                                        }
+                                    }
+                                    numValue *= Math.pow(10,timesDiv);
+                                    int multiplier = 0;
+                                    switch(multLet){
+                                        case "":
+                                            multiplier = 0;
+                                            break;
+                                        case "K":
+                                        case "k":
+                                            multiplier = 3;
+                                            break;
+                                        case "M":
+                                        case "m":
+                                            multiplier = 6;
+                                            break;
+                                        case "G":
+                                        case "g":
+                                            multiplier = 9;
+                                            break;
+                                        case "T":
+                                        case "t":
+                                            multiplier = 12;
+                                            break;
+                                        case "P":
+                                        case "p":
+                                            multiplier = 15;
+                                            break;
+                                        default:
+                                            event.getMessage().addReaction("❌").queue();
+                                            break;
+                                    }
+                                    int digit1 = -1, digit2=-1;
+                                    value1 = "" + numValue;
+                                    if(numValue == (int)numValue){
+                                        digit1 = Integer.parseInt(""+value1.charAt(1));
+                                        digit2 = Integer.parseInt(""+value1.charAt(3));
+                                    }
+                                    else{
+                                        if((""+(int)(numValue)).length()==1){
+                                            digit1 = Integer.parseInt(""+value1.charAt(1));
+                                            digit2 = 0;
+                                        }
+                                        else{
+                                            digit1 = Integer.parseInt(""+value1.charAt(1));
+                                            digit2 = Integer.parseInt(""+value1.charAt(2));
+                                        }
+                                    }
+                                    //numValue *= Math.pow(10,multiplier);
+                                    System.out.println(digit1 + " " + digit2);
+                                    System.out.println(multLet);
+                                    break;
+                                case 4:
+                                    break;
+                                case 5:
+                                    break;
+                                case 6:
+                                    break;
+                                default:
+                                    event.getMessage().addReaction("❌").queue();
+                                    break;
+                            }
+                        }
+                        else{
+                            event.getMessage().addReaction("❌").queue();
+                        }
+                        break;
+                    case 4:
+                        boolean num1 = false;
+                        for (int i = 0; i < args[1].length() && !num1; i++) {
+                            try{
+                                Integer.parseInt(""+args[1].charAt(i));
+                                num = true;
+                            }
+                            catch (NumberFormatException ex){}
+                        }
+                        int bandNum1 = 0;
+                        if(num1){
+                            try{
+                                bandNum1 = Integer.parseInt(args[2]);
+                            }
+                            catch(NumberFormatException ex){}
+                        }
+                        if(!num1){
+                            String[] colors3 = {args[1],args[2],args[3]};
+                            Resistor res1 = new Resistor(colors3);
+                            StringBuilder sb1 = new StringBuilder();
+                            sb1.append("Colors: " + args[1] +", "+ args[2] +", "+ args[3] + "\n");
+                            double value1 = res1.resistanceCalc();
+                            int index1 = 0;
+                            while(value1>1000){
+                                value1 /= 1000.0;
+                                index1++;
+                            }
+                            String unit1 = "Ω";
+                            switch(index1){
+                                case 0:
+                                    break;
+                                case 1:
+                                    unit1 = "K" + unit1;
+                                    break;
+                                case 2:
+                                    unit1 = "M" + unit1;
+                                     break;
+                                case 3:
+                                    unit1 = "G" + unit1;
+                                    break;
+                                case 4:
+                                    unit1 = "T" + unit1;
+                                    break;
+                                case 5:
+                                    unit1 = "P" + unit1;
+                                    break;
+                            }
+                            sb1.append("Value: "+ value1 + unit1 + "\n");
+                            sb1.append("Tolerance: ±" + res1.getTolerance()*100 + "%");
+                            embed.setDescription(sb1.toString());
+                            event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                            break;
+                        }
+                        else if(num1 && bandNum1 != 0){
+                            switch(bandNum1){
+                                case 3:
+                                    boolean isNum1 = true;
+                                    String value1 = "";
+                                    int index1 = 0;
+                                    while(isNum1){
+                                        try{
+                                            if(args[1].charAt(index1) == '.'){
+                                                index1++;
+                                                value1 += ".";
+                                            }
+                                            else{
+                                                value1 += Integer.parseInt(""+args[1].charAt(index1++));
+                                            }
+                                        }
+                                        catch (NumberFormatException ex){
+                                            isNum1 = false;
+                                        }
+                                    }
+                                    System.out.println(value1);
+                                    break;
+                                case 4:
+                                    break;
+                                case 5:
+                                    break;
+                                case 6:
+                                    break;
+                                default:
+                                    event.getMessage().addReaction("❌").queue();
+                                    break;
+                            }
+                        }
+                        else{
+                            event.getMessage().addReaction("❌").queue();
+                        }
+                    case 5:
+                        String[] colors4 = {args[1],args[2],args[3],args[4]};
+                        Resistor res2 = new Resistor(colors4);
+                        StringBuilder sb2 = new StringBuilder();
+                        sb2.append("Colors: " + args[1] +", "+ args[2] +", "+ args[3] +", "+ args[4] + "\n");
+                        double value2 = res2.resistanceCalc();
+                        int index2 = 0;
+                        while(value2>1000){
+                            value2 /= 1000.0;
+                            index2++;
+                        }
+                        String unit2 = "Ω";
+                        switch(index2){
+                            case 0:
+                                break;
+                            case 1:
+                                unit2 = "K" + unit2;
+                                break;
+                            case 2:
+                                unit2 = "M" + unit2;
+                                 break;
+                            case 3:
+                                unit2 = "G" + unit2;
+                                break;
+                            case 4:
+                                unit2 = "T" + unit2;
+                                break;
+                            case 5:
+                                unit2 = "P" + unit2;
+                                break;
+                        }
+                        sb2.append("Value: "+ value2 + unit2 + "\n");
+                        sb2.append("Tolerance: ±" + res2.getTolerance()*100 + "%");
+                        embed.setDescription(sb2.toString());
+                        event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                        break;
+                    case 6:
+                        String[] colors5 = {args[1],args[2],args[3],args[4], args[5]};
+                        Resistor res3 = new Resistor(colors5);
+                        StringBuilder sb3 = new StringBuilder();
+                        sb3.append("Colors: " + args[1] +", "+ args[2] +", "+ args[3] +", " + args[4] +", "+ args[5] + "\n");
+                        double value3 = res3.resistanceCalc();
+                        int index3 = 0;
+                        while(value3>1000){
+                            value3 /= 1000.0;
+                            index3++;
+                        }
+                        String unit3 = "Ω";
+                        switch(index3){
+                            case 0:
+                                break;
+                            case 1:
+                                unit3 = "K" + unit3;
+                                break;
+                            case 2:
+                                unit3 = "M" + unit3;
+                                 break;
+                            case 3:
+                                unit3 = "G" + unit3;
+                                break;
+                            case 4:
+                                unit3 = "T" + unit3;
+                                break;
+                            case 5:
+                                unit3 = "P" + unit3;
+                                break;
+                        }
+                        sb3.append("Value: "+ value3 + unit3 + "\n");
+                        sb3.append("Tolerance: ±" + res3.getTolerance()*100 + "%");
+                        embed.setDescription(sb3.toString());
+                        event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                        break;
+                    case 7:
+                        String[] colors6 = {args[1],args[2],args[3],args[4], args[5], args[6]};
+                        Resistor res4 = new Resistor(colors6);
+                        StringBuilder sb4 = new StringBuilder();
+                        sb4.append("Colors: " + args[1] +", "+ args[2] +", "+ args[3] +", "+ args[4] +", "+args[5]+", "+args[6]+ "\n");
+                        double value4 = res4.resistanceCalc();
+                        int index4 = 0;
+                        while(value4>1000){
+                            value4 /= 1000.0;
+                            index4++;
+                        }
+                        String unit4 = "Ω";
+                        switch(index4){
+                            case 0:
+                                break;
+                            case 1:
+                                unit4 = "K" + unit4;
+                                break;
+                            case 2:
+                                unit4 = "M" + unit4;
+                                 break;
+                            case 3:
+                                unit4 = "G" + unit4;
+                                break;
+                            case 4:
+                                unit4 = "T" + unit4;
+                                break;
+                            case 5:
+                                unit4 = "P" + unit4;
+                                break;
+                        }
+                        sb4.append("Value: "+ value4 + unit4 + "\n");
+                        sb4.append("Tolerance: ±" + res4.getTolerance()*100 + "%\n");
+                        sb4.append("Temperature Coefficient: " + res4.getTempCoeff() + "ppm/K");
+                        embed.setDescription(sb4.toString());
+                        event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                        break;
                 }
-                else{
-                    name = "emoji.png";
-                }
-                File png = downloadFile(url,name);
-                event.getChannel().sendFile(png).reference(event.getMessage()).queue();
-                new File(name).delete();
+            }
+        }
+        else if((args[0].equalsIgnoreCase(ProbieBot.prefix + "stats"))){
+            statTrack(ProbieBot.prefix+"stats");
+            event.getChannel().sendTyping().queue();
+            if (args.length == 1){
+                event.getChannel().sendTyping().queue();
+                Scanner fromFile=null, test = null;
+        PrintWriter toFile = null;
+        try{
+            fromFile = new Scanner(new File("stat.stat"));
+        }
+        catch(FileNotFoundException ex){
+            try{
+                new File("stat.stat").createNewFile();
+                fromFile = new Scanner(new File("stat.stat"));
+            }
+            catch(FileNotFoundException e){}
+            catch(IOException e){}
+        }
+        StringBuilder sb = new StringBuilder();
+        while(fromFile.hasNext()){
+            String temp = fromFile.next();
+            sb.append("`"+temp+"`");
+            sb.append(": ");
+            sb.append(" "+fromFile.nextInt());
+            sb.append("\n");
+        }
+                EmbedBuilder embed = new EmbedBuilder();
+                embed.setTitle("All Stats");
+                embed.setDescription(sb.toString());
+                embed.setColor(Color.GREEN);
+                embed.setFooter("I am a bot beep boop");
+                event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+            }
+            else{
+                event.getMessage().addReaction("❌").queue();
+                event.getChannel().sendMessage("Please use the command in the following format(s):\n"
+                                             + "`%stats`").reference(event.getMessage()).queue();
+            
             }
         }
     }
@@ -1552,6 +2002,33 @@ public class Commands extends ListenerAdapter{
                             channel.addReactionById(messageid, emoji).queue();
                         }
                     }
+                }
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "update")){
+                // Time for subprocesses!!! :HYPERS:
+                try{ 
+                    ProcessBuilder git = new ProcessBuilder().command("git", "clone","https://github.com/probstcj/ProbieBotJar").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
+                    Process procGit = git.start();
+                    procGit.waitFor();
+                    procGit.destroy();
+                    System.out.println("Clear 1");
+                    ProcessBuilder move = new ProcessBuilder().command("mv", "/home/probiebot/Desktop/ProbieBot/ProbieBotJar/ProbieBot.jar","/home/probiebot/Desktop/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
+                    Process procMove = move.start();
+                    procMove.waitFor();
+                    procMove.destroy();
+                    System.out.println("Clear 2");
+                    ProcessBuilder rem = new ProcessBuilder().command("rm", "-r","-f","ProbieBotJar").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
+                    Process procRem = rem.start();
+                    procRem.waitFor();
+                    procRem.destroy();
+                    System.out.println("Clear 3");
+                    ProcessBuilder end = new ProcessBuilder().command("java","-jar","ProbieBot.jar").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
+                    Process procEnd = end.start();
+                    System.out.println("Clear 4");
+                    System.exit(0);
+                }
+                catch(Exception ex){
+                    event.getChannel().sendMessage("Error: "+ex.toString()).queue();
                 }
             }
         }
@@ -2112,5 +2589,56 @@ public class Commands extends ListenerAdapter{
         }
         catch(IOException e){}
         return new File(name);
+    }
+    private void statTrack(String comm){
+        Scanner fromFile=null, test = null;
+        PrintWriter toFile = null;
+        try{
+            fromFile = new Scanner(new File("stat.stat"));
+            //toFile = new PrintWriter(new File("stat.stat"));
+            test = new Scanner(new File("token.token"));
+        }
+        catch(FileNotFoundException ex){
+            try{
+                new File("stat.stat").createNewFile();
+                fromFile = new Scanner(new File("stat.stat"));
+                //toFile = new PrintWriter(new File("stat.stat"));
+            }
+            catch(FileNotFoundException e){}
+            catch(IOException e){}
+        }
+        StringBuilder sb = new StringBuilder();
+        boolean found = false;
+        while(fromFile.hasNext()){
+            String temp = fromFile.next();
+            if(temp.equals(comm)){
+                sb.append(temp);
+                sb.append(" "+(fromFile.nextInt()+1));
+                sb.append("\n");
+                found = true;
+            }
+            else{
+                sb.append(temp);
+                sb.append(" "+fromFile.nextInt());
+                sb.append("\n");
+            }
+        }
+        if(!found){
+            sb.append(comm);
+            sb.append(" 1");
+        }
+        try{
+            toFile = new PrintWriter(new File("stat.stat"));
+        }
+        catch(FileNotFoundException ex){
+            try{
+                new File("stat.stat").createNewFile();
+                toFile = new PrintWriter(new File("stat.stat"));
+            }
+            catch(FileNotFoundException e){}
+            catch(IOException e){}
+        }
+        toFile.write(sb.toString());
+        toFile.close();
     }
 }
