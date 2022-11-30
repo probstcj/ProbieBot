@@ -5,7 +5,7 @@
 package probiebot;
 
 /** 
- *
+ * 
  * @author hellokitty
  */
 public class Resistor {
