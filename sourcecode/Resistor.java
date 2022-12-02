@@ -9,11 +9,11 @@ package probiebot;
  * @author hellokitty
  */
 public class Resistor {
-    public String[] colors = {"black","brown","red",
+    public static String[] colors = {"black","brown","red",
         "orange","yellow","green","blue","violet","gray","white","gold","silver"};
-    public int[] colorsValue = {0,1,2,3,4,5,6,7,8,9,-1,-2};
-    public double[] colorsTolerance = {-1, .01,.02,.0005,.0002,.005,.0025,.001,.0001, -1,.05,.10};
-    public int[] colorsTempCoeff = {250,100,50,15,25,20,10,5,1,-1,-1,-1}; //ppm/K
+    public static int[] colorsValue = {0,1,2,3,4,5,6,7,8,9,-1,-2};
+    public static double[] colorsTolerance = {-1, .01,.02,.0005,.0002,.005,.0025,.001,.0001, -1,.05,.10};
+    public static int[] colorsTempCoeff = {250,100,50,15,25,20,10,5,1,-1,-1,-1}; //ppm/K
     private int firstDig, secondDig, thirdDig, multiplier, coeff;
     private double tolerance;
     public Resistor(int firstDig, int secondDig, int thirdDig,int multiplier, double tolerance, int coeff) throws IllegalArgumentException{

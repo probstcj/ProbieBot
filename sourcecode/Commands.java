@@ -1357,7 +1357,7 @@ public class Commands extends ListenerAdapter{
                                     String value1 = "";
                                     int index1 = 0;
                                     String multLet = null;
-                                    while(isNum1){
+                                    while(isNum1 && index1 != args[1].length()){
                                         try{
                                             if(args[1].charAt(index1) == '.'){
                                                 index1++;
@@ -1370,8 +1370,7 @@ public class Commands extends ListenerAdapter{
                                         catch (NumberFormatException ex){
                                             isNum1 = false;
                                             multLet = ""+args[1].charAt(index1-1);
-                                            
-                                        }
+                                        }                                        
                                     }
                                     double numValue = Double.parseDouble(value1);
                                     int timesMult = 0;
@@ -1394,6 +1393,9 @@ public class Commands extends ListenerAdapter{
                                     }
                                     numValue *= Math.pow(10,timesDiv);
                                     int multiplier = 0;
+                                    if(multLet == null){
+                                        multLet = "";
+                                    }
                                     switch(multLet){
                                         case "":
                                             multiplier = 0;
@@ -1424,23 +1426,114 @@ public class Commands extends ListenerAdapter{
                                     }
                                     int digit1 = -1, digit2=-1;
                                     value1 = "" + numValue;
-                                    if(numValue == (int)numValue){
-                                        digit1 = Integer.parseInt(""+value1.charAt(1));
-                                        digit2 = Integer.parseInt(""+value1.charAt(3));
+                                    if((""+numValue).contains(".") && (""+numValue).length()>7){
+                                        numValue = (int)numValue;
+                                    }
+                                    if(numValue != (int)numValue && numValue < 1){
+                                        if(numValue < .1){
+                                            digit1 = Integer.parseInt(""+value1.charAt(2));
+                                            digit2 = Integer.parseInt(""+value1.charAt(3));
+                                        }
+                                        else if(numValue < 1){
+                                            if(value1.length() == 4){
+                                                digit2 = Integer.parseInt(""+value1.charAt(3));
+                                            }
+                                            else{
+                                                digit2 = 0;
+                                            }
+                                            digit1 = Integer.parseInt(""+value1.charAt(2));
+                                        }
+                                    }
+                                    else if(numValue != (int)numValue){
+                                        if(numValue > 10 && multLet == ""){
+                                            digit1 = Integer.parseInt(""+value1.charAt(0));
+                                            digit2 = Integer.parseInt(""+value1.charAt(1));
+                                        }
+                                        else{
+                                            digit1 = Integer.parseInt(""+value1.charAt(0));
+                                            digit2 = Integer.parseInt(""+value1.charAt(2));
+                                        }
+                                        System.out.println(value1);
+                                        System.out.println("if1");
                                     }
                                     else{
                                         if((""+(int)(numValue)).length()==1){
-                                            digit1 = Integer.parseInt(""+value1.charAt(1));
-                                            digit2 = 0;
+                                            System.out.println("elseif1");
+                                            if(numValue < 10 && multLet == ""){
+                                                digit1 = 0;
+                                                digit2 = Integer.parseInt(""+value1.charAt(0));
+                                            }
+                                            else{
+                                                digit1 = Integer.parseInt(""+value1.charAt(0));
+                                                digit2 = 0;
+                                            }
+                                            
                                         }
                                         else{
-                                            digit1 = Integer.parseInt(""+value1.charAt(1));
-                                            digit2 = Integer.parseInt(""+value1.charAt(2));
+                                            System.out.println("elseif2");
+                                            digit1 = Integer.parseInt(""+value1.charAt(0));
+                                            digit2 = Integer.parseInt(""+value1.charAt(1));
                                         }
                                     }
                                     //numValue *= Math.pow(10,multiplier);
-                                    System.out.println(digit1 + " " + digit2);
-                                    System.out.println(multLet);
+                                    String color1 = Resistor.colors[digit1];
+                                    String color2 = Resistor.colors[digit2];
+                                    System.out.println(numValue);
+                                    if(numValue < 0.1){
+                                        numValue*=100;
+                                        multiplier -= 2;
+                                    }
+                                    if(numValue < 1){
+                                        if(multiplier == 0 && color1 != "black"){
+                                            numValue *= 100;
+                                            multiplier -= 2;
+                                        }
+                                        else{
+                                            numValue *= 10;
+                                            multiplier--;
+                                        }
+                                        if(numValue < 10){
+                                            numValue *= 10;
+                                            multiplier--;
+                                        }
+                                    }
+                                    else if(numValue < 10){
+                                        if(multiplier == 0 && color1 != "black"){
+                                            numValue *= 10;
+                                            multiplier--;
+                                        }
+                                    }
+                                    else if(numValue < 100){
+                                        numValue /=10;
+                                        multiplier++;
+                                    }
+                                    else if(numValue < 1000){
+                                        numValue /= 100;
+                                        multiplier += 2;
+                                    }
+                                    System.out.println(multiplier);
+                                    if(multiplier > 0){
+                                        multiplier--;
+                                    }
+                                    String multColor = "";
+                                    for (int i = 0; i < Resistor.colorsValue.length; i++) {
+                                        if(Resistor.colorsValue[i] == multiplier){
+                                            multColor = Resistor.colors[i];
+                                        }
+                                    }
+                                    System.out.println(numValue);
+                                    System.out.println(color1 + " " + color2 + " " + multColor);
+                                    StringBuilder sb = new StringBuilder();
+                                    sb.append("**Resistance:** ");
+                                    sb.append(args[1] + "\n");
+                                    sb.append("**3-Band Color Code:** ");
+                                    sb.append(color1 + ", " + color2 + ", " + multColor);
+                                    sb.append("\n");
+                                    sb.append("**Default Tolerance:** ±20%");
+                                    embed = new EmbedBuilder();
+                                    embed.setColor(Color.green);
+                                    embed.setDescription(sb.toString());
+                                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
                                     break;
                                 case 4:
                                     break;
