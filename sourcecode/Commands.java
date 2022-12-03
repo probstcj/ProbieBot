@@ -51,6 +51,7 @@ public class Commands extends ListenerAdapter{
     public Queue<User> tarotQueue = new LinkedList<>();
     public boolean activeHelp = false;
     public String countingChannel = "1003825838933938276";
+    public String boisGuild = "1047047324930678824";
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) throws IllegalArgumentException{
         // Get referenced message
@@ -60,6 +61,926 @@ public class Commands extends ListenerAdapter{
 //        catch(NullPointerException ex){}
         try{
         String[] args = event.getMessage().getContentRaw().split("\\s+");
+        if(event.getGuild().getId().equals(boisGuild)){
+            if(args[0].equals(ProbieBot.prefix+"helpfood")){
+                EmbedBuilder embed = new EmbedBuilder();
+                embed.setTitle("All Food Options:");
+                embed.appendDescription("`%apizza` - Free 12 inch pizza (after 24 hours)\n" +
+"`%arbys` - Classic Roast Beef w/ Purchase (Instant)\n" +
+"`%backburger [email]` - Free Classic Burger w/ Purchase (Instant, coupon in email)\n" +
+"`%bagel` - Present Barcode for free bagel, w/ Purchase (Instant)\n" +
+"`%baskin [email]` - BOGO coupon for ice cream (Need to wait for email)\n" +
+"`%beni [email]` - $30 Certificate (Need to wait on email)\n" +
+"`%bj` - Free Pizookie (Instant coupon, apply at checkout)\n" +
+"`%bojangle` - Free Chicken Sandwich and Free Cajun Filet Biscuit (Instant, coupon on account, apply on checkout)\n" +
+"`%buf [email]` - 6 Free Wings (Will email coupon on THE FIRST OF THE MONTH, NEXT MONTH)\n" +
+"`%capd [email]` - 1 pc Fish and Fries (Have to wait on email)\n" +
+"`%chilis` - Free Chips & Salsa or Non-Alchohlic Beverage (Instant, need to change name)\n" +
+"`%cin` - Free Small Cold Brew (Instant, on account, taxes still apply)\n" +
+"`%cpk` - Free small plate and dessert (need to wait on offer to show up)\n" +
+"`%deltaco [email]` - Wait for verification email address in email, 2 free The Del Tacos or Regular Size Shake\n" +
+"`%den` -  Free Triple Double Slam (Need to wait on offer)\n" +
+"`%dots [email]` - Free Dippin Dots (Need to wait on email)\n" +
+"`%drink [email]` - Emails you a Coupon for Free Power Burn Energy Drink (Only works in specific stores, need to wait for email)\n" +
+"`%farmer` - 50% off FarmersDog Meal Box - Have to take survey\n" +
+"`%fire` - Free Firehouse Sub (Need to wait till next day for reward)\n" +
+"`%goodchop` - $50 off (Instant)\n" +
+"`%hello` - Free Hello Fresh Box (uses referal link, must pay shipping)\n" +
+"`%ihop [email]` - Free Pancake Stack (Wait 24-48 hours, coupon in email)\n" +
+"`%kk` - Free donut on first day, dozen (12) after a day\n" +
+"`%mcd [email]` - Must use app, verify email in email, enable location and check deals.\n" +
+"`%pop [email]` - Free regular side, small drink, or Apple Pie (Need to verify email)\n" +
+"`%revive` - 50% off Revive (Instant coupon code)\n" +
+"`%smoothieking` - Must use app, Free smoothie (If doesn't show up, try generating on a Friday)\n" +
+"`%steak [email]` - Will be emailed code within 48 hours, Free steak dinner\n" +
+"`%steaknshake [email]` - Free shake in app (Instant)\n" +
+"`%subway` - BOGO Subs (Instant)\n" +
+"`%taco` - Need to use app to get reward, Free Taco Bell Taco (Usually shows up within 5-10 minutes)\n" +
+"`%texas [email]` - Free Entree w/ Purchase (need to wait on email)\n" +
+"`%thorne` - $25 credit for Supplements\n" +
+"`%treats` - Must download app `Buddies` using link, account will have points, shipping is free, free Dog or Cat Treats\n" +
+"`%tropical` - Must use Tropical App, must make purchase of $5 or more, wait 24 hours, Free Smoothie\n" +
+"`%waffle [email]` - Free waffle or Hashbrowns (need to wait for email)\n" +
+"`%wetzel [email]` - Must use app, Free Wetzel pretzel, login and go to rewards (Instant)\n" +
+"`%what [email]` - Download Whataburger app, login and verify email, Free Whataburger (within an hour)\n");
+                event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+            
+            }
+            else if(args[0].equals(ProbieBot.prefix+"apizza")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("APizza Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("APizza Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"arbys")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Arbys Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Arbys Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"backburger")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Backburger Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Backburger Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"bagel")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Bagel Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Bagel Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"baskin")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Baskin Robbins Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Baskin Robbins Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"beni")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Benihana Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Benihana Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"bj")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("BJ's Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("BJ's Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"bojangle")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Bojangle Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Bojangle Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"buf")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("BWW Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("BWW Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"capd")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Captain D's Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Captain D's Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"chilis")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Chilis Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Chilis Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"cin")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Cinnabon Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Cinnabon Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"cpk")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("California Pizza Kitchen Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("California Pizza Kitchen Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"deltaco")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Del Taco Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Del Taco Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"den")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Denny's Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Denny's Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"dots")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Dippin Dots Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Dippin Dots Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"drink")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Power Burn Drink Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Power Burn Drink Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"farmer")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Farmersdog Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Farmersdog Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"fire")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Firehouse Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Firehouse Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"goodchop")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Goodchop Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Goodchop Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"hello")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Hello Fresh Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Hello Fresh Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"ihop")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("IHop Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("IHop Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"kk")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Krispy Kreme Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Krispy Kreme Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"mcd")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("MCDonalds Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("MCDonalds Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"pop")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Popeyes Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Popeyes Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"revive")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Revive Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Revive Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"smoothieking")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Smoothie King Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Smoothie King Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"steak")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Steak Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Steak Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"steaknshake")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("SteakNShake Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("SteakNShake Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"subway")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Subway Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Subway Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"taco")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Taco Bell Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Taco Bell Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"texas")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Texas Roadhouse Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Texas Roadhouse Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"thorne")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Thorne Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Thorne Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"treats")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Treats Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Treats Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"tropical")){
+                if(args.length == 1){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Tropical Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Tropical Account Request:\n");
+                    //sb.append(args[1]);
+                    //sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"waffle")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Waffle House Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Waffle House Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"wetzel")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Wetzel Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Wetzel Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equals(ProbieBot.prefix+"what")){
+                if(args.length == 2){
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Whataburger Account");
+                    embed.setDescription("Please wait for your account. Will be dm'd to you.");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Whataburger Account Request:\n");
+                    sb.append(args[1]);
+                    sb.append("\n");
+                    sb.append("Channel ID: " + event.getMessage().getChannel().getId());
+                    sb.append("\n");
+                    sb.append("User ID: " + event.getMessage().getAuthor().getId());
+                    sb.append("\n");
+                    sb.append("Message ID: " + event.getMessage().getId());
+                    sb.append("\n");
+                    sb.append("Reply with `%deny` or `%accept [email] [password]`");
+                    event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+        }
         // Literally roast
         if(event.getMessage().getContentRaw().toLowerCase().contains("<@981690057226342430>")){
             StringBuilder message = new StringBuilder();
@@ -2122,6 +3043,82 @@ public class Commands extends ListenerAdapter{
                 }
                 catch(Exception ex){
                     event.getChannel().sendMessage("Error: "+ex.toString()).queue();
+                }
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "accept")){
+                if(args.length < 2){
+                    event.getMessage().addReaction("❌").queue();
+                }
+                else if(event.getMessage().getReferencedMessage() == null){
+                    event.getMessage().addReaction("❌").queue();
+                }
+                else{
+                    EmbedBuilder embed = new EmbedBuilder();
+                    String refMess = event.getMessage().getReferencedMessage().getContentRaw();
+                    String[] argsRef = refMess.split("\\s+");
+                    String temp = argsRef[0];
+                    StringBuilder namePlace = new StringBuilder();
+                    int i = 0;
+                    while(!temp.equals("Account")){
+                        namePlace.append(temp);
+                        temp = argsRef[++i];
+                    }
+                    i = 0;
+                    String channelID = null, userID = null, messageID = null;
+                    temp = args[0];
+                    while(!temp.equals("ID:")){
+                        i++;
+                        temp = argsRef[i];
+                    }
+                    i++;
+                    channelID = argsRef[i];
+                    i+= 3;
+                    userID = argsRef[i];
+                    i+= 3;
+                    messageID = argsRef[i];
+                    event.getJDA().getGuildById(boisGuild).getTextChannelById(channelID).sendMessage("DM sent").reference(event.getJDA().getGuildById(boisGuild).getTextChannelById(channelID).retrieveMessageById(messageID).complete()).queue();
+                    String title = namePlace + "Account Generated";
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Email: `" + args[1] + "`");
+                    sb.append("\n");
+                    sb.append("Password: `" + args[2]+"`");
+                    embed.setTitle(title);
+                    embed.setDescription(sb);
+                    event.getJDA().getUserById(userID).openPrivateChannel().complete().sendMessage(embed.build()).queue();
+                    event.getJDA().getUserById(userID).openPrivateChannel().complete().sendMessage(args[1]).queue();
+                    event.getJDA().getUserById(userID).openPrivateChannel().complete().sendMessage(args[2]).queue();
+                }
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "deny")){
+                if(args.length > 2){
+                    event.getMessage().addReaction("❌").queue();
+                }
+                else{
+                    EmbedBuilder embed = new EmbedBuilder();
+                    String refMess = event.getMessage().getReferencedMessage().getContentRaw();
+                    String[] argsRef = refMess.split("\\s+");
+                    String temp = argsRef[0];
+                    StringBuilder namePlace = new StringBuilder();
+                    int i = 0;
+                    while(!temp.equals("Account")){
+                        namePlace.append(temp);
+                        temp = argsRef[++i];
+                    }
+                    i = 0;
+                    String channelID = null, userID = null, messageID = null;
+                    temp = args[0];
+                    while(!temp.equals("ID:")){
+                        i++;
+                        temp = argsRef[i];
+                    }
+                    i++;
+                    channelID = argsRef[i];
+                    i+= 3;
+                    userID = argsRef[i];
+                    i+= 3;
+                    messageID = argsRef[i];
+                    event.getJDA().getGuildById(boisGuild).getTextChannelById(channelID).sendMessage("Request Denied, try again later").reference(event.getJDA().getGuildById(boisGuild).getTextChannelById(channelID).retrieveMessageById(messageID).complete()).queue();
+                    
                 }
             }
         }
