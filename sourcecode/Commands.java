@@ -3077,16 +3077,16 @@ public class Commands extends ListenerAdapter{
                     i+= 3;
                     messageID = argsRef[i];
                     event.getJDA().getGuildById(boisGuild).getTextChannelById(channelID).sendMessage("DM sent").reference(event.getJDA().getGuildById(boisGuild).getTextChannelById(channelID).retrieveMessageById(messageID).complete()).queue();
-                    String title = namePlace + "Account Generated";
+                    String title = namePlace + " Account Generated";
                     StringBuilder sb = new StringBuilder();
                     sb.append("Email: `" + args[1] + "`");
                     sb.append("\n");
                     sb.append("Password: `" + args[2]+"`");
                     embed.setTitle(title);
                     embed.setDescription(sb);
-                    event.getJDA().getUserById(userID).openPrivateChannel().complete().sendMessage(embed.build()).queue();
-                    event.getJDA().getUserById(userID).openPrivateChannel().complete().sendMessage(args[1]).queue();
-                    event.getJDA().getUserById(userID).openPrivateChannel().complete().sendMessage(args[2]).queue();
+                    event.getJDA().getGuildById(boisGuild).retrieveMemberById(userID).complete().getUser().openPrivateChannel().complete().sendMessage(embed.build()).queue();
+                    event.getJDA().getGuildById(boisGuild).retrieveMemberById(userID).complete().getUser().openPrivateChannel().complete().sendMessage(args[1]).queue();
+                    event.getJDA().getGuildById(boisGuild).retrieveMemberById(userID).complete().getUser().openPrivateChannel().complete().sendMessage(args[2]).queue();
                 }
             }
             else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "deny")){
