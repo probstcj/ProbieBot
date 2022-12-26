@@ -13,7 +13,6 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,9 +35,11 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.MessageEmbed.Field;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.managers.AudioManager;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -2064,6 +2065,38 @@ public class Commands extends ListenerAdapter{
             
             }
         }
+        else if((args[0].equalsIgnoreCase(ProbieBot.prefix + "kittyme"))){
+            statTrack(ProbieBot.prefix+"kittyme");
+            event.getChannel().sendTyping().queue();
+            try{
+                event.getChannel().sendMessage(kittyScrape("https://www.randomkittengenerator.com/")).reference(event.getMessage()).queue();
+            }
+            catch(Exception ex){
+                event.getMessage().addReaction("❌").queue();
+            }
+        }
+        else if((args[0].equalsIgnoreCase(ProbieBot.prefix + "musicrec"))){
+            //statTrack(ProbieBot.prefix+"musicrec");
+            if(args.length > 1){
+                event.getChannel().sendTyping().queue();
+                StringBuilder sb = new StringBuilder();
+                for (int i = 1; i < args.length; i++) {
+                    sb.append(args[i]);
+                    if(i != args.length-1){
+                        sb.append(" ");
+                    }
+                }
+                EmbedBuilder embed = musicURLScrape("https://www.newreleasesnow.com/genre?q="+sb.toString().replace(" ", "-"),sb.toString().replace(" ","-"));
+                event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+            }
+            else{
+                event.getChannel().sendTyping().queue();
+                event.getMessage().addReaction("❌").queue();
+                event.getChannel().sendMessage("Please use the command in the following format: `%musicrec [genre]`").reference(event.getMessage()).queue();
+                        
+            }
+            
+        }
     }
     catch (Exception e){
         EmbedBuilder exception = new EmbedBuilder();
@@ -3170,6 +3203,51 @@ public class Commands extends ListenerAdapter{
         }
         
     }
+    private String kittyScrape(String URL){
+        try{
+        final String httpsUrl = URL;
+        final URL url = new URL(httpsUrl);
+         URLConnection con = new URL(URL).openConnection();
+        con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+        con.connect();
+         PrintWriter toFile = new PrintWriter(new File("kitty.kitty"));
+         final BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                
+         String input;
+         StringBuilder sb = new StringBuilder();
+         while ((input = br.readLine()) != null){
+           sb.append(input);
+           sb.append("\n");
+         }
+          toFile.append(sb);
+          toFile.close();
+         br.close();
+         
+         
+         Scanner fromFile = new Scanner(new File("kitty.kitty"));
+         String temp = null;
+          while(fromFile.hasNext()){
+              boolean link = false;
+              if(fromFile.next().contains("post_content") && !link){
+                  boolean linkFound = false;
+                  while(!linkFound){
+                      temp = fromFile.next();
+                      if(temp.contains("src=")){
+                          link = true;
+                          linkFound = true;
+                          temp = temp.substring(temp.indexOf("src=\"")+5,temp.lastIndexOf("\""));
+                      }
+                  }
+              }
+          }
+          (new File("kitty.kitty")).delete();
+          return temp;
+        }
+        catch(Exception ex){
+            return null;
+        }
+        
+    }
     private EmbedBuilder anagramScrape(String URL, String userIn){
         try{
         final String httpsUrl = URL;
@@ -3341,6 +3419,189 @@ public class Commands extends ListenerAdapter{
         
         return latlon;
     }
+    private EmbedBuilder musicURLScrape(String URL, String genre){
+        try{
+        final String httpsUrl = URL;
+        final URL url = new URL(httpsUrl);
+         URLConnection con = new URL(URL).openConnection();
+        con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+        con.connect();
+         PrintWriter toFile = new PrintWriter(new File("mus.mus"));
+         final BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+         String input;
+         StringBuilder sb = new StringBuilder();
+         while ((input = br.readLine()) != null){
+           sb.append(input);
+           sb.append("\n");
+         }
+          toFile.append(sb);
+          toFile.close();
+         br.close();
+         
+         
+         Scanner fromFile = new Scanner(new File("mus.mus"));
+         String temp = null;
+         int page = 1;
+          while(fromFile.hasNext()){
+              temp = fromFile.next();
+              if(temp.contains(genre)){
+                  try{
+                      page = Integer.parseInt(temp.substring(temp.indexOf("\">")+2,temp.lastIndexOf("</a>")));
+                  }
+                  catch(NumberFormatException ex){}
+                  catch(StringIndexOutOfBoundsException ex){}
+              }
+          }
+          Random rand = new Random();
+          page = rand.nextInt(page)+1;
+            URL = "https://www.newreleasesnow.com/genre/p"+page+"?q="+genre;
+          //(new File("mus.mus")).delete();
+          final String httpsUrl2 = URL;
+        final URL url2 = new URL(httpsUrl2);
+        con = new URL(URL).openConnection();
+        con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+        con.connect();
+         toFile = new PrintWriter(new File("mus.mus"));
+         final BufferedReader br2 = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+         input = null;
+         sb = new StringBuilder();
+         while ((input = br2.readLine()) != null){
+           sb.append(input);
+           sb.append("\n");
+         }
+          toFile.append(sb);
+          toFile.close();
+         br2.close();
+         
+         
+         fromFile = new Scanner(new File("mus.mus"));
+         temp = null;
+         ArrayList<MusicAlbum> albums = new ArrayList<>();
+          while(fromFile.hasNext()){
+              try{
+              if(fromFile.next().contains("artist")){
+                  for (int i = 0; i < 3; i++) {
+                      temp = fromFile.next();
+                  }
+                  String artist = null;
+                  if(temp.contains("</span>")){
+                      artist = temp.substring(temp.indexOf("\">")+2,temp.lastIndexOf("</span>"));
+                  }
+                  else{
+                    temp = temp.substring(temp.indexOf("\">")+2);
+                    artist = temp;
+                    while(!(temp = fromFile.next()).contains("</span>")){
+                        artist = artist + " " + temp;
+                    }
+                    artist = artist + " " + temp.substring(0,temp.lastIndexOf("</span"));
+                  }
+                  if(artist.contains("<") || artist.contains(">")){
+                      artist = null;
+                  }
+                  while(!(temp = fromFile.next()).contains("black-bg-font")){}
+                  String album = null;
+                  if(temp.contains("</span>")){
+                      try{
+                        album = temp.substring(0, temp.lastIndexOf("</span>"));
+                      }
+                      catch(StringIndexOutOfBoundsException ex){}
+                  }
+                  else{
+                    temp = temp.substring(temp.indexOf("\">")+2);
+                    album = temp;
+                    while(!(temp = fromFile.next()).contains("</span>")){
+                        album = album + " " + temp;
+                        }
+                        try{
+                            album = album + " " + temp.substring(0,temp.lastIndexOf("</span"));
+                        }
+                        catch(StringIndexOutOfBoundsException ex){}
+                    }
+                  if(album!=null)
+                    if(album.contains("<")||album.contains(">")){
+                        album = null;
+                    }
+                  while(!(temp = fromFile.next()).contains("justify-content-end")){}
+                  temp = fromFile.next();
+                  String releaseDate;
+                  temp = temp + " " + fromFile.next();
+                  fromFile.next();
+                  temp = temp + " " + fromFile.next();
+                  temp = temp.replace("<br", ",");
+                  releaseDate = temp;
+                  try{
+                      albums.add(new MusicAlbum(genre, album, artist, releaseDate));
+                  }
+                  catch(IllegalArgumentException ex){}
+              }
+              }
+              catch(NoSuchElementException exe){}
+          }
+          // Select random album
+          MusicAlbum rec = albums.get(rand.nextInt(albums.size()));
+          String albumName = rec.getAlbum().replace(".", "")
+                  .replace("/", "-")
+                  .replace(":","");
+          String artistName = rec.getArtist().replace(".","")
+                  .replace("/","-")
+                  .replace(":","");
+
+          URL = ("https://www.newreleasesnow.com/album/"+artistName.replace(" ", "-")+"-"+albumName
+                  .replace(" ","-"))
+                  .replace("(", "")
+                  .replace(")", "")
+                  .replace("’", "")
+                  .replace("\'","")
+                  .replace("-&-", "-")
+                  .replace("-+-","-");
+          rec.setLink(URL);
+            final String httpsUrl3 = URL;
+        final URL url3 = new URL(httpsUrl3);
+        con = new URL(URL).openConnection();
+        con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+        con.connect();
+         toFile = new PrintWriter(new File("mus.mus"));
+         final BufferedReader br3 = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+         input = null;
+         sb = new StringBuilder();
+         while ((input = br3.readLine()) != null){
+           sb.append(input);
+           sb.append("\n");
+         }
+          toFile.append(sb);
+          toFile.close();
+         br3.close();
+         
+         
+         fromFile = new Scanner(new File("mus.mus"));
+         temp = null;
+          while(fromFile.hasNext()){
+              if((temp = fromFile.next()).contains("500w")){
+                  if((temp = fromFile.next()).contains("https")){
+                      rec.setImg(temp);
+                  }
+              }
+          }
+            
+          EmbedBuilder embed = new EmbedBuilder();
+          embed.setTitle(genre + " Album Recommendation");
+          embed.appendDescription("**Title:** " + rec.getAlbum() + "\n"
+                  + "**Artist:** " + rec.getArtist() + "\n"
+                  + "**Release Date:** " + rec.getReleaseDate() + "\n\n"
+                  + "[Link](" + rec.getLink() + ")");
+          embed.setColor(Color.GREEN.brighter());
+          embed.setImage(rec.getImg());
+          (new File("mus.mus")).delete();
+          return embed;
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+            return null;
+        }
+    }
     private File downloadFile(String URL, String name){
         try{
             URL website = new URL(URL);
@@ -3403,5 +3664,6 @@ public class Commands extends ListenerAdapter{
         toFile.write(sb.toString());
         toFile.close();
     }
+    
     
 }
