@@ -40,6 +40,7 @@ public class ProbieBot {
     public static ArrayList<String> literallyNotRoasts = new ArrayList<>();
     
     public static void main(String[] args) throws LoginException{
+        System.out.println("hello");
         String token = null;
         Scanner scan = null;
         try{
