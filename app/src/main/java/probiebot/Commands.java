@@ -28,6 +28,7 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.GuildChannel;
@@ -35,11 +36,9 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.MessageEmbed.Field;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.managers.AudioManager;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -2408,30 +2407,27 @@ public class Commands extends ListenerAdapter{
                 try{ 
                     ProcessBuilder git = new ProcessBuilder().command("git", "clone","https://github.com/probstcj/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
                     Process procGit = git.start();
-                    procGit.waitFor();
-                    while(!procGit.onExit().isDone()){
-                        procGit.waitFor();
-                    }
+                    procGit.waitFor(10,TimeUnit.SECONDS);
                     procGit.destroy();
                     System.out.println("Clear 1");
                     ProcessBuilder move = new ProcessBuilder().command("mv", "/home/probiebot/Desktop/ProbieBot/ProbieBot/executable/.","/home/probiebot/Desktop/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
                     Process procMove = move.start();
                     procMove.waitFor();
                     procMove.destroy();
-//                    move = new ProcessBuilder().command("mv","/home/probiebot/Desktop/ProbieBot/ProbieBot/app/src/main/java/probiebot/.","/home/probiebot/Desktop/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
-//                    procMove = move.start();
-//                    procMove.waitFor();
-//                    procMove.destroy();
-//                    System.out.println("Clear 2");
-//                    ProcessBuilder rem = new ProcessBuilder().command("rm", "-r","-f","ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
-//                    Process procRem = rem.start();
-//                    procRem.waitFor();
-//                    procRem.destroy();
-//                    System.out.println("Clear 3");
-//                    ProcessBuilder end = new ProcessBuilder().command("java","-jar","ProbieBot.jar").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
-//                    Process procEnd = end.start();
-//                    System.out.println("Clear 4");
-//                    System.exit(0);
+                    move = new ProcessBuilder().command("mv","/home/probiebot/Desktop/ProbieBot/ProbieBot/app/src/main/java/probiebot/.","/home/probiebot/Desktop/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
+                    procMove = move.start();
+                    procMove.waitFor();
+                    procMove.destroy();
+                    System.out.println("Clear 2");
+                    ProcessBuilder rem = new ProcessBuilder().command("rm", "-r","-f","ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
+                    Process procRem = rem.start();
+                    procRem.waitFor();
+                    procRem.destroy();
+                    System.out.println("Clear 3");
+                    ProcessBuilder end = new ProcessBuilder().command("java","-jar","ProbieBot.jar").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
+                    Process procEnd = end.start();
+                    System.out.println("Clear 4");
+                    System.exit(0);
                 }
                 catch(Exception ex){
                     event.getChannel().sendMessage("Error: "+ex.toString()).queue();
