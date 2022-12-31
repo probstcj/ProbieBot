@@ -2411,7 +2411,7 @@ public class Commands extends ListenerAdapter{
                     procGit.waitFor();
                     procGit.destroy();
                     System.out.println("Clear 1");
-                    ProcessBuilder move = new ProcessBuilder().command("mv", "/home/probiebot/Desktop/ProbieBot/ProbieBotJar/executable/*","/home/probiebot/Desktop/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
+                    ProcessBuilder move = new ProcessBuilder().command("mv", "/home/probiebot/Desktop/ProbieBot/ProbieBot/executable/*","/home/probiebot/Desktop/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
                     Process procMove = move.start();
                     procMove.waitFor();
                     procMove.destroy();
