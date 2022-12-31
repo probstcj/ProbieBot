@@ -1466,7 +1466,7 @@ public class Commands extends ListenerAdapter{
         else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "code")){
             statTrack(ProbieBot.prefix+"code");
             event.getChannel().sendTyping().queue();
-            event.getAuthor().openPrivateChannel().complete().sendFile(new File("ProbieBotPublic.java")).queue();
+            event.getAuthor().openPrivateChannel().complete().sendFile(new File("ProbieBot.java")).queue();
             event.getAuthor().openPrivateChannel().complete().sendFile(new File("Commands.java")).queue();
             event.getAuthor().openPrivateChannel().complete().sendFile(new File("GasPrice.java")).queue();
             event.getAuthor().openPrivateChannel().complete().sendFile(new File("LetterCount.java")).queue();
@@ -2406,17 +2406,21 @@ public class Commands extends ListenerAdapter{
             else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "update")){
                 // Time for subprocesses!!! :HYPERS:
                 try{ 
-                    ProcessBuilder git = new ProcessBuilder().command("git", "clone","https://github.com/probstcj/ProbieBotJar").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
+                    ProcessBuilder git = new ProcessBuilder().command("git", "clone","https://github.com/probstcj/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
                     Process procGit = git.start();
                     procGit.waitFor();
                     procGit.destroy();
                     System.out.println("Clear 1");
-                    ProcessBuilder move = new ProcessBuilder().command("mv", "/home/probiebot/Desktop/ProbieBot/ProbieBotJar/ProbieBot.jar","/home/probiebot/Desktop/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
+                    ProcessBuilder move = new ProcessBuilder().command("mv", "/home/probiebot/Desktop/ProbieBot/ProbieBotJar/executable/*","/home/probiebot/Desktop/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
                     Process procMove = move.start();
                     procMove.waitFor();
                     procMove.destroy();
+                    move = new ProcessBuilder().command("mv","/home/probiebot/Desktop/ProbieBot/app/src/main/java/probiebot/*","/home/probiebot/Desktop/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
+                    procMove = move.start();
+                    procMove.waitFor();
+                    procMove.destroy();
                     System.out.println("Clear 2");
-                    ProcessBuilder rem = new ProcessBuilder().command("rm", "-r","-f","ProbieBotJar").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
+                    ProcessBuilder rem = new ProcessBuilder().command("rm", "-r","-f","ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
                     Process procRem = rem.start();
                     procRem.waitFor();
                     procRem.destroy();
