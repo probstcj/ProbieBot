@@ -81,3 +81,7 @@ In this project, two main libaries have been used:
 [JSoup-1.15.2](https://jsoup.org/) - This library allows Java to parse web pages in HTML and is used in web scraping.  
 
 [All Zip Codes With Their Corresponding Latitude and Longitude Coordinates](https://gist.github.com/erichurst/7882666) - This file allows for the %radar command to work properly. This file is slightly edited to work with the program properly.
+
+## Special Thanks
+
+Special thanks to [Lukas Bixen](https://github.com/lrb2) for converting my project into Gradle to assist with library dependencies.
