@@ -2407,17 +2407,13 @@ public class Commands extends ListenerAdapter{
                 try{ 
                     ProcessBuilder git = new ProcessBuilder().command("git", "clone","https://github.com/probstcj/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
                     Process procGit = git.start();
-                    procGit.waitFor(10,TimeUnit.SECONDS);
-                    // Hello
+                    int stat = procGit.waitFor();
+                    System.out.println(stat );
                     procGit.destroy();
                     
                     System.out.println("Clear 1");
                     ProcessBuilder move = new ProcessBuilder().command("mv", "/home/probiebot/Desktop/ProbieBot/ProbieBot/executable/ProbieBot.jar","/home/probiebot/Desktop/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
                     Process procMove = move.start();
-                    procMove.waitFor();
-                    procMove.destroy();
-                    move = new ProcessBuilder().command("mv","/home/probiebot/Desktop/ProbieBot/ProbieBot/app/src/main/java/probiebot/*","/home/probiebot/Desktop/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
-                    procMove = move.start();
                     procMove.waitFor();
                     procMove.destroy();
                     System.out.println("Clear 2");
