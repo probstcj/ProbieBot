@@ -2161,7 +2161,7 @@ public class Commands extends ListenerAdapter{
                             sb.append(" ");
                         }
                     }
-                    EmbedBuilder embed = musicURLScrape("https://www.newreleasesnow.com/genre?q="+sb.toString().replace(" ", "-").replace("/", "-").replace("&", "-"),sb.toString().replace(" ","-"));
+                    EmbedBuilder embed = musicURLScrape("https://www.newreleasesnow.com/genre?q="+sb.toString().replace(" ", "-").replace("/", "-").replace("&", "-"),sb.toString().replace(" ","-").replace("/", "-").replace("&", "-"));
                     event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
                 }
             }
