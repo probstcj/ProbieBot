@@ -2085,6 +2085,7 @@ public class Commands extends ListenerAdapter{
                 event.getMessage().addReaction("❌").queue();
             }
         }
+        
         else if((args[0].equalsIgnoreCase(ProbieBot.prefix + "musicrec"))){
             statTrack(ProbieBot.prefix+"musicrec");
             if(args.length > 1){
@@ -2375,18 +2376,13 @@ public class Commands extends ListenerAdapter{
                 help.setTitle("ProbieBot Help - Miscellaneous");
                 help.addField(ProbieBot.prefix+"info","This will give all the information public about me.",false);
                 help.addField(ProbieBot.prefix+"help", "This will give you all of my available commands to serve you useless humans... I mean, my wonderful users:eyes:", false);
-                help.addField(ProbieBot.prefix+"roast [@]","This command will roast whoever you ping. Use at user discretion.",false);
                 help.addField(ProbieBot.prefix+"weather [City, ST]", "This will give you the weather in a certain area. Please use the format: city, ST (abbreviation for state) *Currently only works in the US.", false);
                 help.addField(ProbieBot.prefix+"gas [City, ST]", "This will give you the prices of Regular gas in a certain area. Please use the format: city, ST (abbreviation for state) *Currently only works in the US. **Currently only works for Regular gas", false);
                 help.addField(ProbieBot.prefix+"suggest Message", "This will add a suggestion for the bot. Please use this wisely, as it does DM my owner. No need for square brackets or anything.", false);
-                help.addField(ProbieBot.prefix+"addbday", "This will add your birthday to the list of birthdays to be announced. Please enter in as YYYY/MM/DD. Please make sure it is correct before adding it, as you cannot change it once it is in. If it needs to be changed, please let my owner know and he can delete it manually.", false);
-                help.addField(ProbieBot.prefix+"code", "This will DM you my source code (edited to make sure you hooligans don't steal my UAuth Key...)", false);
                 help.addField(ProbieBot.prefix+"puppyme", "This will send you a random picture of a puppy.", false);
-                help.addField(ProbieBot.prefix+"anagram Message", "This will send you an anagram of the text after the initial command. Currently the max number of words is 3.", false);
                 help.addField(ProbieBot.prefix+"flman [date or no-date]", "This will send you either the most recent Florida Man article, or on a specific date given by the user in the format MM/DD.", false);
                 help.addField(ProbieBot.prefix+"radar [zip code or no args]", "If given no arguments, it will send a radar image of the entire United States. If given a zip code (5 digit format), it will return a radar image of that area.", false);
                 help.addField(ProbieBot.prefix+"latex [color or no color]", "If you want expression to be colored, put a comma after the color, then LaTeX code behind it. Default is white.", false);
-                help.addField(ProbieBot.prefix+"resistor [still under progress]", "Still not completely working, will update when completed to my liking.", false);
                 help.addField(ProbieBot.prefix+"kittyme", "Returns a random picture of a kitten.", false);
                 help.addField(ProbieBot.prefix+"stats [command]", "Returns the stats on uses on the command given in the arguments.", false);
                 help.addField(ProbieBot.prefix+"musicrec [Music Genre]", "Returns a music recommendation given the genre given in arguments. Use `%musicrec help` to see all available genres", false);
@@ -2403,34 +2399,16 @@ public class Commands extends ListenerAdapter{
                 help.addField("", "Here are a list of commands available for the bot, along with their descriptions:", false);
                 help.addField(ProbieBot.prefix+"info","This will give all the information public about me.",false);
                 help.addField(ProbieBot.prefix+"help", "This will give you all of my available commands to serve you useless humans... I mean, my wonderful users:eyes:", false);
-                help.addField(ProbieBot.prefix+"roast [@]","This command will roast whoever you ping. Use at user discretion.",false);
-                help.addField(ProbieBot.prefix+"whois [@]","This will tell you the description of the person you pinged. These descriptions are written by the person.",false);
-                help.addField(ProbieBot.prefix+"addwhois [description]","This will add YOUR description. Only you can access this command for your description. Please use the square brackets for this command, so I know when your description starts and ends.",false);
-                help.addField(ProbieBot.prefix+"editwhois [description]", "This will replace YOUR previous description with the one you type in. Only you can access this command for your description. Please use the square brackets for this command, so I know when your description starts and ends.",false);
-                help.addField(ProbieBot.prefix+"deletewhois","This will delete YOUR description that I have saved for you. Only you can access this command for your description.",false);
-                help.addField(ProbieBot.prefix+"addquote","If you reply to a message with this command, it will add it to the quote list.",false);
-                help.addField(ProbieBot.prefix+"deletequote [quote num]","This will delete a quote given the quote number; however, only the user who quoted the person and the person who is quoted may delete the quote in question.",false);
-                help.addField(ProbieBot.prefix+"quotes [@]","This will give all quotes saved by the user pinged.",false);
-                help.addField(ProbieBot.prefix+"viewquotes [quote # start] [quote # end]", "This will give you all quote numbers in between, and including, the numbers given by the arguments.",false);
-                help.addField(ProbieBot.prefix+"embedtomsg","(NOT YET IMPLEMENTED)If you reply to a message with this command, it will extract the contents out of the embedded message",false);
-                help.addField(ProbieBot.prefix+"msgtoembed","(NOT YET IMPLEMENTED)If you reply to a message with this command, it will put the contents in an embedded message",false);
-                help.addField(ProbieBot.prefix+"createembed [title] [color] [subtitle 1] [msg 1] [subtitle 2] [msg 2]...","(NOT YET IMPLEMENTED)This command will create the embedded message with the given constraints. Please use square brackets for arguments so I know when your arguments stop and end. Please use colors in the following format: [R,G,B,Opacity]",false);
-                help.addField(ProbieBot.prefix+"tarotqueue","This is a feature that will view the queue of people for tarot card readings.", false);
-                help.addField(ProbieBot.prefix+"addtarotqueue","This is a feature that will add you to the queue of people for tarot card readings.",false);
-                help.addField(ProbieBot.prefix+"deletetarotqueue","This is a feature that will delete you from the queue of people for tarot card readings.",false);
-                help.addField(ProbieBot.prefix+"nexttarotqueue","RESERVED FOR MEAGAN: This is a feature that will pop off the first person in the queue of people for tarot card readings.",false);
                 help.addField(ProbieBot.prefix+"weather [City, ST]", "This will give you the weather in a certain area. Please use the format: city, ST (abbreviation for state) *Currently only works in the US.", false);
                 help.addField(ProbieBot.prefix+"gas [City, ST]", "This will give you the prices of Regular gas in a certain area. Please use the format: city, ST (abbreviation for state) *Currently only works in the US. **Currently only works for Regular gas", false);
                 help.addField(ProbieBot.prefix+"suggest Message", "This will add a suggestion for the bot. Please use this wisely, as it does DM my owner. No need for square brackets or anything.", false);
                 help.addField(ProbieBot.prefix+"addbday", "This will add your birthday to the list of birthdays to be announced. Please make sure it is correct before adding it, as you cannot change it once it is in. If it needs to be changed, please let my owner know and he can delete it manually.", false);
-                help.addField(ProbieBot.prefix+"code", "This will DM you my source code (edited to make sure you hooligans don't steal my UAuth Key...)", false);
                 help.addField(ProbieBot.prefix+"puppyme", "This will send you a random picture of a puppy.", false);
                 help.setFooter("I am a bot beep boop");
                 event.getAuthor().openPrivateChannel().complete().sendMessage(help.build()).queue();
                 help.clear();
                 help.setColor(Color.RED);
                 help.setTitle("Help Page 2");
-                help.addField(ProbieBot.prefix+"anagram Message", "This will send you an anagram of the text after the initial command. Currently the max number of words is 3.", false);
                 help.addField(ProbieBot.prefix+"flman [date or no-date]", "This will send you either the most recent Florida Man article, or on a specific date given by the user in the format MM/DD.", false);
                 help.addField(ProbieBot.prefix+"radar [zip code or no args]", "If given no arguments, it will send a radar image of the entire United States. If given a zip code (5 digit format), it will return a radar image of that area.", false);
                 help.addField(ProbieBot.prefix+"latex [color or no color]", "If you want expression to be colored, put a comma after the color, then LaTeX code behind it. Default is white.", false);
@@ -2656,6 +2634,16 @@ public class Commands extends ListenerAdapter{
                 event.getChannel().sendTyping().queue();
                 try{
                     event.getChannel().sendMessage(kittyScrape("https://www.randomkittengenerator.com/")).reference(event.getMessage()).queue();
+                }
+                catch(Exception ex){
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "puppyme")){
+                statTrack(ProbieBot.prefix+"puppyme");
+                event.getChannel().sendTyping().queue();
+                try{
+                    event.getChannel().sendMessage(puppyScrape("https://www.generatormix.com/random-dog-generator?number=1")).reference(event.getMessage()).queue();
                 }
                 catch(Exception ex){
                     event.getMessage().addReaction("❌").queue();
