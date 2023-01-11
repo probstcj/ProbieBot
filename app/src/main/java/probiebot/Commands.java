@@ -2150,6 +2150,7 @@ public class Commands extends ListenerAdapter{
                             + "  ⦁ World\n"
                             + "  ⦁ Various Artists\n"
                             + "  ⦁ Yacht Rock\n");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
                 }
                 else{
                     event.getChannel().sendTyping().queue();
