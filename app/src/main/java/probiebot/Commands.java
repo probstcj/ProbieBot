@@ -2412,6 +2412,10 @@ public class Commands extends ListenerAdapter{
                     procGit.destroy();
                     
                     System.out.println("Clear 1");
+                    ProcessBuilder copySrc = new ProcessBuilder().command("cp","/home/probiebot/Desktop/ProbieBot/ProbieBot/app/src/main/java/ProbieBot/.","/home/probiebot/Desktop/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
+                    Process procCopySrc = copySrc.start();
+                    procCopySrc.waitFor();
+                    procCopySrc.destroy();
                     ProcessBuilder move = new ProcessBuilder().command("mv", "/home/probiebot/Desktop/ProbieBot/ProbieBot/executable/ProbieBot.jar","/home/probiebot/Desktop/ProbieBot").inheritIO().directory(new File("/home/probiebot/Desktop/ProbieBot"));
                     Process procMove = move.start();
                     procMove.waitFor();
