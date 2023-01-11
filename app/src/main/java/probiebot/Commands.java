@@ -94,7 +94,7 @@ public class Commands extends ListenerAdapter{
 "`%smoothieking` - Must use app, Free smoothie (If doesn't show up, try generating on a Friday)\n" +
 "`%steak [email]` - Will be emailed code within 48 hours, Free steak dinner\n" +
 "`%steaknshake [email]` - Free shake in app (Instant)\n" +
-"`%subway` - BOGO Subs (Instant)\n" +
+"`%subway` - BOGO 50% off Subs (Instant)\n" +
 "`%taco` - Need to use app to get reward, Free Taco Bell Taco (Usually shows up within 5-10 minutes)\n" +
 "`%texas [email]` - Free Entree w/ Purchase (need to wait on email)\n" +
 "`%treats` - Must download app `Buddies` using link, account will have points, shipping is free, free Dog or Cat Treats\n" +
@@ -227,7 +227,9 @@ public class Commands extends ListenerAdapter{
                             embed.setTitle("Tropical Account");
                             sb.append("Tropical Account Request:\n");
                             break;
-                        default: break;
+                        default: 
+                            event.getMessage().addReaction("❌").queue();
+                            break;
                         
                         
                     }
@@ -316,6 +318,7 @@ public class Commands extends ListenerAdapter{
                             sb.append("Whataburger Account Request:\n");
                             break;
                         default:
+                            event.getMessage().addReaction("❌").queue();
                             break;
                     }
                     embed.setDescription("Please wait for your account. Will be dm'd to you.");
@@ -530,6 +533,10 @@ public class Commands extends ListenerAdapter{
             help.addField(ProbieBot.prefix+"flman [date or no-date]", "This will send you either the most recent Florida Man article, or on a specific date given by the user in the format MM/DD.", false);
             help.addField(ProbieBot.prefix+"radar [zip code or no args]", "If given no arguments, it will send a radar image of the entire United States. If given a zip code (5 digit format), it will return a radar image of that area.", false);
             help.addField(ProbieBot.prefix+"latex [color or no color]", "If you want expression to be colored, put a comma after the color, then LaTeX code behind it. Default is white.", false);
+            help.addField(ProbieBot.prefix+"resistor [still under progress]", "Still not completely working, will update when completed to my liking.", false);
+            help.addField(ProbieBot.prefix+"kittyme", "Returns a random picture of a kitten.", false);
+            help.addField(ProbieBot.prefix+"stats [command]", "Returns the stats on uses on the command given in the arguments.", false);
+            help.addField(ProbieBot.prefix+"musicrec [Music Genre]", "Returns a music recommendation given the genre given in arguments. Use `%musicrec help` to see all available genres", false);
             help.setFooter("I am a bot beep boop");
             event.getChannel().sendMessage(help.build()).reference(event.getMessage()).queue();
             help.clear();
@@ -2077,16 +2084,85 @@ public class Commands extends ListenerAdapter{
         else if((args[0].equalsIgnoreCase(ProbieBot.prefix + "musicrec"))){
             //statTrack(ProbieBot.prefix+"musicrec");
             if(args.length > 1){
-                event.getChannel().sendTyping().queue();
-                StringBuilder sb = new StringBuilder();
-                for (int i = 1; i < args.length; i++) {
-                    sb.append(args[i]);
-                    if(i != args.length-1){
-                        sb.append(" ");
-                    }
+                if(args[1].equalsIgnoreCase("-help")){
+                    event.getChannel().sendTyping().queue();
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Music Recommendation Help");
+                    embed.appendDescription("**This command uses webscraping, so only the following genres may be used:**\n"
+                            + "  ⦁ Americana\n"
+                            + "  ⦁ Blues\n"
+                            + "  ⦁ Hard Rock\n"
+                            + "  ⦁ Metal\n"
+                            + "  ⦁ Alternative\n"
+                            + "  ⦁ Adult Alternative\n"
+                            + "  ⦁ Alt Metal\n"
+                            + "  ⦁ Avant-Garde/Experiemental\n"
+                            + "  ⦁ Bluegrass\n"
+                            + "  ⦁ Blues Rock\n"
+                            + "  ⦁ Childrens\n"
+                            + "  ⦁ Christian\n"
+                            + "  ⦁ Classical\n"
+                            + "  ⦁ Classic Rock\n"
+                            + "  ⦁ Club/Dance\n"
+                            + "  ⦁ Contemporary Jazz\n"
+                            + "  ⦁ Country\n"
+                            + "  ⦁ DVD/Blu-Ray\n"
+                            + "  ⦁ Electric Blues\n"
+                            + "  ⦁ Electronic\n"
+                            + "  ⦁ Folk\n"
+                            + "  ⦁ Funk\n"
+                            + "  ⦁ Garage\n"
+                            + "  ⦁ Gospel\n"
+                            + "  ⦁ Indie Folk\n"
+                            + "  ⦁ Indie Pop\n"
+                            + "  ⦁ Indie Rock\n"
+                            + "  ⦁ Instrumental\n"
+                            + "  ⦁ Jam Band\n"
+                            + "  ⦁ Jazz\n"
+                            + "  ⦁ Jazz Fusion\n"
+                            + "  ⦁ Jazz Vocals\n"
+                            + "  ⦁ Latin\n"
+                            + "  ⦁ Live\n"
+                            + "  ⦁ Neo Soul\n"
+                            + "  ⦁ New Wave\n"
+                            + "  ⦁ Oldies\n"
+                            + "  ⦁ Pop\n"
+                            + "  ⦁ Pop Punk\n"
+                            + "  ⦁ Post Punk\n"
+                            + "  ⦁ Progressive Metal\n"
+                            + "  ⦁ Prog Rock\n"
+                            + "  ⦁ Psych\n"
+                            + "  ⦁ Punk\n"
+                            + "  ⦁ R&B\n"
+                            + "  ⦁ Rap/Hip-Hop\n"
+                            + "  ⦁ Reggae\n"
+                            + "  ⦁ Reissue\n"
+                            + "  ⦁ Rockabilly\n"
+                            + "  ⦁ Singer-Songwriter\n"
+                            + "  ⦁ Smooth Jazz\n"
+                            + "  ⦁ Soul\n"
+                            + "  ⦁ Southern Rock\n"
+                            + "  ⦁ Soundtrack\n"
+                            + "  ⦁ Stoner Rock\n"
+                            + "  ⦁ Synth Pop\n"
+                            + "  ⦁ Thrash\n"
+                            + "  ⦁ Traditional Jazz\n"
+                            + "  ⦁ World\n"
+                            + "  ⦁ Various Artists\n"
+                            + "  ⦁ Yacht Rock\n");
                 }
-                EmbedBuilder embed = musicURLScrape("https://www.newreleasesnow.com/genre?q="+sb.toString().replace(" ", "-"),sb.toString().replace(" ","-"));
-                event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                else{
+                    event.getChannel().sendTyping().queue();
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 1; i < args.length; i++) {
+                        sb.append(args[i]);
+                        if(i != args.length-1){
+                            sb.append(" ");
+                        }
+                    }
+                    EmbedBuilder embed = musicURLScrape("https://www.newreleasesnow.com/genre?q="+sb.toString().replace(" ", "-").replace("/", "-").replace("&", "-"),sb.toString().replace(" ","-"));
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                }
             }
             else{
                 event.getChannel().sendTyping().queue();
