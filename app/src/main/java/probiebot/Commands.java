@@ -594,6 +594,10 @@ public class Commands extends ListenerAdapter{
             help.addField(ProbieBot.prefix+"flman [date or no-date]", "This will send you either the most recent Florida Man article, or on a specific date given by the user in the format MM/DD.", false);
             help.addField(ProbieBot.prefix+"radar [zip code or no args]", "If given no arguments, it will send a radar image of the entire United States. If given a zip code (5 digit format), it will return a radar image of that area.", false);
             help.addField(ProbieBot.prefix+"latex [color or no color]", "If you want expression to be colored, put a comma after the color, then LaTeX code behind it. Default is white.", false);
+            help.addField(ProbieBot.prefix+"resistor [still under progress]", "Still not completely working, will update when completed to my liking.", false);
+            help.addField(ProbieBot.prefix+"kittyme", "Returns a random picture of a kitten.", false);
+            help.addField(ProbieBot.prefix+"stats [command]", "Returns the stats on uses on the command given in the arguments.", false);
+            help.addField(ProbieBot.prefix+"musicrec [Music Genre]", "Returns a music recommendation given the genre given in arguments. Use `%musicrec help` to see all available genres", false);
             help.setFooter("I am a bot beep boop");
             event.getAuthor().openPrivateChannel().complete().sendMessage(help.build()).queue();
             help.clear();
@@ -2082,7 +2086,7 @@ public class Commands extends ListenerAdapter{
             }
         }
         else if((args[0].equalsIgnoreCase(ProbieBot.prefix + "musicrec"))){
-            //statTrack(ProbieBot.prefix+"musicrec");
+            statTrack(ProbieBot.prefix+"musicrec");
             if(args.length > 1){
                 if(args[1].equalsIgnoreCase("-help")){
                     event.getChannel().sendTyping().queue();
@@ -2334,8 +2338,428 @@ public class Commands extends ListenerAdapter{
     }
     @Override
     public void onPrivateMessageReceived(PrivateMessageReceivedEvent event) {
+        String[] args = event.getMessage().getContentRaw().split("\\s+");
+        if(args[0].equalsIgnoreCase(ProbieBot.prefix + "info")){
+                statTrack(ProbieBot.prefix+"info");
+                event.getChannel().sendTyping().queue();
+                EmbedBuilder info = new EmbedBuilder();
+                info.setTitle("ProbieBot Information");
+                info.addField("Creator","My creator is ShaquilleOSqueal (Caleb Probst).",false);
+                info.addField("Description", "I am coded in Java using JDA 4.4.0_352", false);
+                info.addField("Usage", "In order to use my commands, use the \""+ProbieBot.prefix+"\" "
+                        + "prefix in front of your command. For a list of commands, use \""+ProbieBot.prefix+"help\"", false);
+                info.setFooter("I am a bot beep boop");
+                info.setColor(Color.GREEN);
+
+                event.getChannel().sendMessage(info.build()).reference(event.getMessage()).queue();
+                info.clear();
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "help")){
+                statTrack(ProbieBot.prefix+"help");
+                EmbedBuilder help = new EmbedBuilder();
+                help.setColor(Color.RED.brighter());
+                help.setTitle("ProbieBot Help Categories:");
+                help.addField("", "Here are a list of categories that you can ask for help for",false);
+                help.addField(ProbieBot.prefix+"helpmisc", "Use this command to help with the commands used for miscellaneous features.", false);
+               help.addField(ProbieBot.prefix+"helpall","This command will DM you all the commands, to save on spam messages in the chat",false);
+
+                help.setFooter("I am a bot beep boop");
+                event.getChannel().sendMessage(help.build()).reference(event.getMessage()).queue();
+                help.clear();
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "helpmisc")){
+                statTrack(ProbieBot.prefix+"helpmisc");
+                event.getChannel().sendTyping().queue();
+                EmbedBuilder help = new EmbedBuilder();
+                help.setColor(Color.RED.brighter());
+                help.setTitle("ProbieBot Help - Miscellaneous");
+                help.addField(ProbieBot.prefix+"info","This will give all the information public about me.",false);
+                help.addField(ProbieBot.prefix+"help", "This will give you all of my available commands to serve you useless humans... I mean, my wonderful users:eyes:", false);
+                help.addField(ProbieBot.prefix+"roast [@]","This command will roast whoever you ping. Use at user discretion.",false);
+                help.addField(ProbieBot.prefix+"weather [City, ST]", "This will give you the weather in a certain area. Please use the format: city, ST (abbreviation for state) *Currently only works in the US.", false);
+                help.addField(ProbieBot.prefix+"gas [City, ST]", "This will give you the prices of Regular gas in a certain area. Please use the format: city, ST (abbreviation for state) *Currently only works in the US. **Currently only works for Regular gas", false);
+                help.addField(ProbieBot.prefix+"suggest Message", "This will add a suggestion for the bot. Please use this wisely, as it does DM my owner. No need for square brackets or anything.", false);
+                help.addField(ProbieBot.prefix+"addbday", "This will add your birthday to the list of birthdays to be announced. Please enter in as YYYY/MM/DD. Please make sure it is correct before adding it, as you cannot change it once it is in. If it needs to be changed, please let my owner know and he can delete it manually.", false);
+                help.addField(ProbieBot.prefix+"code", "This will DM you my source code (edited to make sure you hooligans don't steal my UAuth Key...)", false);
+                help.addField(ProbieBot.prefix+"puppyme", "This will send you a random picture of a puppy.", false);
+                help.addField(ProbieBot.prefix+"anagram Message", "This will send you an anagram of the text after the initial command. Currently the max number of words is 3.", false);
+                help.addField(ProbieBot.prefix+"flman [date or no-date]", "This will send you either the most recent Florida Man article, or on a specific date given by the user in the format MM/DD.", false);
+                help.addField(ProbieBot.prefix+"radar [zip code or no args]", "If given no arguments, it will send a radar image of the entire United States. If given a zip code (5 digit format), it will return a radar image of that area.", false);
+                help.addField(ProbieBot.prefix+"latex [color or no color]", "If you want expression to be colored, put a comma after the color, then LaTeX code behind it. Default is white.", false);
+                help.addField(ProbieBot.prefix+"resistor [still under progress]", "Still not completely working, will update when completed to my liking.", false);
+                help.addField(ProbieBot.prefix+"kittyme", "Returns a random picture of a kitten.", false);
+                help.addField(ProbieBot.prefix+"stats [command]", "Returns the stats on uses on the command given in the arguments.", false);
+                help.addField(ProbieBot.prefix+"musicrec [Music Genre]", "Returns a music recommendation given the genre given in arguments. Use `%musicrec help` to see all available genres", false);
+                help.setFooter("I am a bot beep boop");
+                event.getChannel().sendMessage(help.build()).reference(event.getMessage()).queue();
+                help.clear();   
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "helpall")){
+                statTrack(ProbieBot.prefix+"helpall");
+                event.getChannel().sendTyping().queue();
+                EmbedBuilder help = new EmbedBuilder();
+                help.setColor(Color.RED.brighter());
+                help.setTitle("ProbieBot Help");
+                help.addField("", "Here are a list of commands available for the bot, along with their descriptions:", false);
+                help.addField(ProbieBot.prefix+"info","This will give all the information public about me.",false);
+                help.addField(ProbieBot.prefix+"help", "This will give you all of my available commands to serve you useless humans... I mean, my wonderful users:eyes:", false);
+                help.addField(ProbieBot.prefix+"roast [@]","This command will roast whoever you ping. Use at user discretion.",false);
+                help.addField(ProbieBot.prefix+"whois [@]","This will tell you the description of the person you pinged. These descriptions are written by the person.",false);
+                help.addField(ProbieBot.prefix+"addwhois [description]","This will add YOUR description. Only you can access this command for your description. Please use the square brackets for this command, so I know when your description starts and ends.",false);
+                help.addField(ProbieBot.prefix+"editwhois [description]", "This will replace YOUR previous description with the one you type in. Only you can access this command for your description. Please use the square brackets for this command, so I know when your description starts and ends.",false);
+                help.addField(ProbieBot.prefix+"deletewhois","This will delete YOUR description that I have saved for you. Only you can access this command for your description.",false);
+                help.addField(ProbieBot.prefix+"addquote","If you reply to a message with this command, it will add it to the quote list.",false);
+                help.addField(ProbieBot.prefix+"deletequote [quote num]","This will delete a quote given the quote number; however, only the user who quoted the person and the person who is quoted may delete the quote in question.",false);
+                help.addField(ProbieBot.prefix+"quotes [@]","This will give all quotes saved by the user pinged.",false);
+                help.addField(ProbieBot.prefix+"viewquotes [quote # start] [quote # end]", "This will give you all quote numbers in between, and including, the numbers given by the arguments.",false);
+                help.addField(ProbieBot.prefix+"embedtomsg","(NOT YET IMPLEMENTED)If you reply to a message with this command, it will extract the contents out of the embedded message",false);
+                help.addField(ProbieBot.prefix+"msgtoembed","(NOT YET IMPLEMENTED)If you reply to a message with this command, it will put the contents in an embedded message",false);
+                help.addField(ProbieBot.prefix+"createembed [title] [color] [subtitle 1] [msg 1] [subtitle 2] [msg 2]...","(NOT YET IMPLEMENTED)This command will create the embedded message with the given constraints. Please use square brackets for arguments so I know when your arguments stop and end. Please use colors in the following format: [R,G,B,Opacity]",false);
+                help.addField(ProbieBot.prefix+"tarotqueue","This is a feature that will view the queue of people for tarot card readings.", false);
+                help.addField(ProbieBot.prefix+"addtarotqueue","This is a feature that will add you to the queue of people for tarot card readings.",false);
+                help.addField(ProbieBot.prefix+"deletetarotqueue","This is a feature that will delete you from the queue of people for tarot card readings.",false);
+                help.addField(ProbieBot.prefix+"nexttarotqueue","RESERVED FOR MEAGAN: This is a feature that will pop off the first person in the queue of people for tarot card readings.",false);
+                help.addField(ProbieBot.prefix+"weather [City, ST]", "This will give you the weather in a certain area. Please use the format: city, ST (abbreviation for state) *Currently only works in the US.", false);
+                help.addField(ProbieBot.prefix+"gas [City, ST]", "This will give you the prices of Regular gas in a certain area. Please use the format: city, ST (abbreviation for state) *Currently only works in the US. **Currently only works for Regular gas", false);
+                help.addField(ProbieBot.prefix+"suggest Message", "This will add a suggestion for the bot. Please use this wisely, as it does DM my owner. No need for square brackets or anything.", false);
+                help.addField(ProbieBot.prefix+"addbday", "This will add your birthday to the list of birthdays to be announced. Please make sure it is correct before adding it, as you cannot change it once it is in. If it needs to be changed, please let my owner know and he can delete it manually.", false);
+                help.addField(ProbieBot.prefix+"code", "This will DM you my source code (edited to make sure you hooligans don't steal my UAuth Key...)", false);
+                help.addField(ProbieBot.prefix+"puppyme", "This will send you a random picture of a puppy.", false);
+                help.setFooter("I am a bot beep boop");
+                event.getAuthor().openPrivateChannel().complete().sendMessage(help.build()).queue();
+                help.clear();
+                help.setColor(Color.RED);
+                help.setTitle("Help Page 2");
+                help.addField(ProbieBot.prefix+"anagram Message", "This will send you an anagram of the text after the initial command. Currently the max number of words is 3.", false);
+                help.addField(ProbieBot.prefix+"flman [date or no-date]", "This will send you either the most recent Florida Man article, or on a specific date given by the user in the format MM/DD.", false);
+                help.addField(ProbieBot.prefix+"radar [zip code or no args]", "If given no arguments, it will send a radar image of the entire United States. If given a zip code (5 digit format), it will return a radar image of that area.", false);
+                help.addField(ProbieBot.prefix+"latex [color or no color]", "If you want expression to be colored, put a comma after the color, then LaTeX code behind it. Default is white.", false);
+                help.addField(ProbieBot.prefix+"resistor [still under progress]", "Still not completely working, will update when completed to my liking.", false);
+                help.addField(ProbieBot.prefix+"kittyme", "Returns a random picture of a kitten.", false);
+                help.addField(ProbieBot.prefix+"stats [command]", "Returns the stats on uses on the command given in the arguments.", false);
+                help.addField(ProbieBot.prefix+"musicrec [Music Genre]", "Returns a music recommendation given the genre given in arguments. Use `%musicrec help` to see all available genres", false);
+                help.setFooter("I am a bot beep boop");
+                event.getAuthor().openPrivateChannel().complete().sendMessage(help.build()).queue();
+                help.clear();
+                help.setColor(Color.RED.brighter());
+                help.setDescription("I'm in your DM's" + event.getJDA().getGuildById("799255831190831115").getEmotesByName("NoblestOfNobles", true).get(0).getAsMention());
+                event.getChannel().sendMessage(help.build()).reference(event.getMessage()).queue();
+                help.clear();
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "weather")){
+                if(args.length< 3){
+                    event.getMessage().addReaction("❌").queue();
+                    event.getChannel().sendMessage("Please use the command in the following format:\n"
+                                                 + "`%weather City, ST`\n (There must be a space after comma)").reference(event.getMessage()).queue();
+                }
+                else{
+                    statTrack(ProbieBot.prefix+"weather");
+                    event.getChannel().sendTyping().queue();
+                    StringBuilder sb = new StringBuilder();
+                    int i = 0;
+                    do{
+                        i++;
+                        sb.append(args[i]);
+                        sb.append(" ");
+
+                    }
+                    while(!args[i].contains(","));
+                    String city = sb.toString().substring(0, sb.toString().length()-2);
+                    String state = args[i+1];
+                    try{
+                        event.getChannel().sendMessage(weatherScrape(("https://www.wunderground.com/weather/us/"+state+"/"+city.replaceAll(" ", "+")).toLowerCase()).build()).reference(event.getMessage()).queue();
+                    }
+                    catch(Exception ex){
+                        event.getMessage().addReaction("❌").queue();
+                    }
+                }
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "gas")){
+                if(args.length < 3){
+                    event.getMessage().addReaction("❌").queue();
+                    event.getChannel().sendMessage("Please use the command in the following format:\n"
+                                                 + "`%gas City, ST`\n (There must be a space after comma)").reference(event.getMessage()).queue();
+                }
+                else{
+                    statTrack(ProbieBot.prefix+"gas");
+                    event.getChannel().sendTyping().queue();
+                    try{
+                        StringBuilder sb = new StringBuilder();
+                        int i = 0;
+                        do{
+                            i++;
+                            sb.append(args[i]);
+                            sb.append(" ");
+
+                        }
+                        while(!args[i].contains(","));
+                        String city = sb.toString().substring(0, sb.toString().length()-2);
+                        String state = args[i+1];
+                        event.getChannel().sendMessage(gasScrape("https://www.gasbuddy.com/home?search="+city.replaceAll(" ", "+")+"+"+state+"&fuel=1").build()).reference(event.getMessage()).queue();
+                    }
+                    catch(Exception ex){
+                        event.getMessage().addReaction("❌").queue();
+                    }
+                }
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "suggest")){
+                statTrack(ProbieBot.prefix+"suggest");
+                if(args.length==1){
+                    event.getMessage().addReaction("❌").queue();
+                    event.getChannel().sendMessage("Please use the command in the following format:\n"
+                                                 + "`%Suggest [Any Text]`").reference(event.getMessage()).queue();
+                }
+                else{
+                    event.getChannel().sendTyping().queue();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("From ");
+                    sb.append(event.getAuthor().getName());
+                    sb.append(" (");
+                    sb.append(event.getAuthor().getId());
+                    sb.append("): ");
+                    for (int i = 1; i < args.length; i++) {
+                        sb.append(args[i]);
+                        sb.append(" ");
+                    }
+                    //event.getGuild().retrieveMemberById("540957458944884746").complete().getUser().openPrivateChannel().complete().sendMessage(sb).queue();
+                    event.getJDA().getUserById("540957458944884746").openPrivateChannel().complete().sendMessage(sb).queue();
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("Suggestion");
+                    embed.appendDescription("Suggestion has been sent!");
+                    embed.setColor(Color.GREEN);
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    embed.clear();
+                }
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "flman")){
+                statTrack(ProbieBot.prefix+"flman");
+                event.getChannel().sendTyping().queue();
+                if(args.length>3){
+                    event.getMessage().addReaction("❌").queue();
+                    event.getChannel().sendMessage("Please use the command in the following format(s):\n"
+                                                 + "`%flman MM/DD` for an article on a certain day\n"
+                                                 + "`%flman` for most recent article").reference(event.getMessage()).queue();
+                }
+                else if(args.length == 2){
+                    try{
+                        Integer.parseInt(args[1].substring(0,2));
+                        Integer.parseInt(args[1].substring(3,5));
+                        event.getChannel().sendMessage(flmanScrape("https://www.google.com/search?q=florida+man+"+args[1]+"&tbm=nws")).reference(event.getMessage()).queue();
+                    }
+                    catch(NumberFormatException e){
+                        event.getMessage().addReaction("❌").queue();
+                    }
+                }
+                else if(args.length == 1){
+                    event.getChannel().sendMessage(flmanScrape("https://www.google.com/search?q=florida+man+most+recent&tbm=nws")).reference(event.getMessage()).queue();
+                }
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "latex")){
+                statTrack(ProbieBot.prefix+"latex");
+                event.getChannel().sendTyping().queue();
+                // String: https://latex.codecogs.com/png.image?\tiny&space;\dpi{1000}\color{INSERT COLOR}LATEX
+                // Example: https://latex.codecogs.com/png.image?\tiny&space;\dpi{1000}\color{white}&space;x&space;=&space;\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+                if (args.length==1){
+                    event.getMessage().addReaction("❌").queue();
+                    event.getChannel().sendMessage("Please use the command in the following format(s):\n"
+                                                 + "`%latex color, [code]` for equation in color\n"
+                                                 + "`%latex [code]` for equation in white").reference(event.getMessage()).queue();
+
+                }
+                else{
+                    String URL = "https://latex.codecogs.com/png.image?\\tiny\\dpi{1000}\\color{LC}{LATEX}";
+                    if(args[1].equalsIgnoreCase("white,") || 
+                            args[1].equalsIgnoreCase("black,") ||
+                            args[1].equalsIgnoreCase("red,") ||
+                            args[1].equalsIgnoreCase("green,") ||
+                            args[1].equalsIgnoreCase("blue,") ||
+                            args[1].equalsIgnoreCase("cyan,") ||
+                            args[1].equalsIgnoreCase("magenta,") ||
+                            args[1].equalsIgnoreCase("yellow,")){
+                        String message = event.getMessage().getContentRaw();
+                        message = message.substring(message.indexOf(",")+1);
+                        String latex = (message.replaceAll(" ", "&space;")).replace("\n", "&space;");
+                        URL = (URL.replace("{LC}", "{" + args[1].substring(0,args[1].length()-1) + "}")).replace("{LATEX}", latex);
+                        if(latex.length()>1024){
+                            event.getMessage().addReaction("❌").queue();
+                            event.getChannel().sendMessage("LaTeX String is Too Long!");
+                        }
+                        else{
+                            event.getChannel().sendMessage(URL).reference(event.getMessage()).queue();
+                        }
+                    }
+                    else if(args[1].contains(",")){
+                        event.getMessage().addReaction("❌").queue();
+                        event.getChannel().sendMessage("Invalid color.").reference(event.getMessage()).queue();
+
+                    }
+                    else{ // Default white
+                        String message = event.getMessage().getContentRaw();
+                        message = message.substring(message.indexOf("%latex")+6);
+                        String latex = (message.replaceAll(" ", "&space;")).replace("\n", "&space;");
+                        while(latex.contains("&space;&space;")){
+                            latex = latex.replaceAll("&space;&space;", "&space;");
+                        }
+                        URL = (URL.replace("{LC}", "{" + "white" + "}")).replace("{LATEX}", latex);
+                        if(latex.length()>1024){
+                            event.getMessage().addReaction("❌").queue();
+                            event.getChannel().sendMessage("LaTeX String is Too Long!").reference(event.getMessage()).queue();
+                        }
+                        else{
+                            event.getChannel().sendMessage(URL).reference(event.getMessage()).queue();
+                        }
+                    }
+                }
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "stats")){
+                statTrack(ProbieBot.prefix+"stats");
+                event.getChannel().sendTyping().queue();
+                if (args.length == 1){
+                    event.getChannel().sendTyping().queue();
+                    Scanner fromFile=null, test = null;
+            PrintWriter toFile = null;
+            try{
+                fromFile = new Scanner(new File("stat.stat"));
+            }
+            catch(FileNotFoundException ex){
+                try{
+                    new File("stat.stat").createNewFile();
+                    fromFile = new Scanner(new File("stat.stat"));
+                }
+                catch(FileNotFoundException e){}
+                catch(IOException e){}
+            }
+            StringBuilder sb = new StringBuilder();
+            while(fromFile.hasNext()){
+                String temp = fromFile.next();
+                sb.append("`"+temp+"`");
+                sb.append(": ");
+                sb.append(" "+fromFile.nextInt());
+                sb.append("\n");
+            }
+                    EmbedBuilder embed = new EmbedBuilder();
+                    embed.setTitle("All Stats");
+                    embed.setDescription(sb.toString());
+                    embed.setColor(Color.GREEN);
+                    embed.setFooter("I am a bot beep boop");
+                    event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                }
+                else{
+                    event.getMessage().addReaction("❌").queue();
+                    event.getChannel().sendMessage("Please use the command in the following format(s):\n"
+                                                 + "`%stats`").reference(event.getMessage()).queue();
+
+                }
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "kittyme")){
+                statTrack(ProbieBot.prefix+"kittyme");
+                event.getChannel().sendTyping().queue();
+                try{
+                    event.getChannel().sendMessage(kittyScrape("https://www.randomkittengenerator.com/")).reference(event.getMessage()).queue();
+                }
+                catch(Exception ex){
+                    event.getMessage().addReaction("❌").queue();
+                }
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "musicrec")){
+                statTrack(ProbieBot.prefix+"musicrec");
+                if(args.length > 1){
+                    if(args[1].equalsIgnoreCase("-help")){
+                        event.getChannel().sendTyping().queue();
+                        EmbedBuilder embed = new EmbedBuilder();
+                        embed.setTitle("Music Recommendation Help");
+                        embed.appendDescription("**This command uses webscraping, so only the following genres may be used:**\n"
+                                + "  ⦁ Americana\n"
+                                + "  ⦁ Blues\n"
+                                + "  ⦁ Hard Rock\n"
+                                + "  ⦁ Metal\n"
+                                + "  ⦁ Alternative\n"
+                                + "  ⦁ Adult Alternative\n"
+                                + "  ⦁ Alt Metal\n"
+                                + "  ⦁ Avant-Garde/Experiemental\n"
+                                + "  ⦁ Bluegrass\n"
+                                + "  ⦁ Blues Rock\n"
+                                + "  ⦁ Childrens\n"
+                                + "  ⦁ Christian\n"
+                                + "  ⦁ Classical\n"
+                                + "  ⦁ Classic Rock\n"
+                                + "  ⦁ Club/Dance\n"
+                                + "  ⦁ Contemporary Jazz\n"
+                                + "  ⦁ Country\n"
+                                + "  ⦁ DVD/Blu-Ray\n"
+                                + "  ⦁ Electric Blues\n"
+                                + "  ⦁ Electronic\n"
+                                + "  ⦁ Folk\n"
+                                + "  ⦁ Funk\n"
+                                + "  ⦁ Garage\n"
+                                + "  ⦁ Gospel\n"
+                                + "  ⦁ Indie Folk\n"
+                                + "  ⦁ Indie Pop\n"
+                                + "  ⦁ Indie Rock\n"
+                                + "  ⦁ Instrumental\n"
+                                + "  ⦁ Jam Band\n"
+                                + "  ⦁ Jazz\n"
+                                + "  ⦁ Jazz Fusion\n"
+                                + "  ⦁ Jazz Vocals\n"
+                                + "  ⦁ Latin\n"
+                                + "  ⦁ Live\n"
+                                + "  ⦁ Neo Soul\n"
+                                + "  ⦁ New Wave\n"
+                                + "  ⦁ Oldies\n"
+                                + "  ⦁ Pop\n"
+                                + "  ⦁ Pop Punk\n"
+                                + "  ⦁ Post Punk\n"
+                                + "  ⦁ Progressive Metal\n"
+                                + "  ⦁ Prog Rock\n"
+                                + "  ⦁ Psych\n"
+                                + "  ⦁ Punk\n"
+                                + "  ⦁ R&B\n"
+                                + "  ⦁ Rap/Hip-Hop\n"
+                                + "  ⦁ Reggae\n"
+                                + "  ⦁ Reissue\n"
+                                + "  ⦁ Rockabilly\n"
+                                + "  ⦁ Singer-Songwriter\n"
+                                + "  ⦁ Smooth Jazz\n"
+                                + "  ⦁ Soul\n"
+                                + "  ⦁ Southern Rock\n"
+                                + "  ⦁ Soundtrack\n"
+                                + "  ⦁ Stoner Rock\n"
+                                + "  ⦁ Synth Pop\n"
+                                + "  ⦁ Thrash\n"
+                                + "  ⦁ Traditional Jazz\n"
+                                + "  ⦁ World\n"
+                                + "  ⦁ Various Artists\n"
+                                + "  ⦁ Yacht Rock\n");
+                        event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    }
+                    else{
+                        event.getChannel().sendTyping().queue();
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 1; i < args.length; i++) {
+                            sb.append(args[i]);
+                            if(i != args.length-1){
+                                sb.append(" ");
+                            }
+                        }
+                        EmbedBuilder embed = musicURLScrape("https://www.newreleasesnow.com/genre?q="+sb.toString().replace(" ", "-").replace("/", "-").replace("&", "-"),sb.toString().replace(" ","-").replace("/", "-").replace("&", "-"));
+                        event.getChannel().sendMessage(embed.build()).reference(event.getMessage()).queue();
+                    }
+                }
+                else{
+                    event.getChannel().sendTyping().queue();
+                    event.getMessage().addReaction("❌").queue();
+                    event.getChannel().sendMessage("Please use the command in the following format: `%musicrec [genre]`").reference(event.getMessage()).queue();
+                }
+            }
+            else if(!event.getAuthor().getId().equals("540957458944884746") && !event.getAuthor().getId().equals("981690057226342430")){
+                StringBuilder sb = new StringBuilder();
+                sb.append("New DM\n");
+                sb.append("Name: "+(event.getAuthor().getName()).replace(" ", "_")+"\n");
+                sb.append("ID: " +event.getAuthor().getId()+"\n\n");
+                sb.append(event.getMessage().getContentRaw());
+                event.getJDA().getUserById("540957458944884746").openPrivateChannel().complete().sendMessage(sb).queue();
+            }
         if(event.getAuthor().getId().equals("540957458944884746")){
-            String[] args = event.getMessage().getContentRaw().split("\\s+");
             if(args[0].equalsIgnoreCase(ProbieBot.prefix + "message")){
                 // Given a channel, it will send a message
                 String channelid = null;
@@ -2907,6 +3331,37 @@ public class Commands extends ListenerAdapter{
                     event.getJDA().getGuildById(boisGuild).getTextChannelById(channelID).sendMessage("Request Denied, try again later").reference(event.getJDA().getGuildById(boisGuild).getTextChannelById(channelID).retrieveMessageById(messageID).complete()).queue();
                     
                 }
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "replydm")){
+                String ref = event.getMessage().getReferencedMessage().getContentRaw();
+                String[] argsRef = ref.split("\\s+");
+                String name = null;
+                String id = null;
+                for (int i = 0; i < argsRef.length; i++) {
+                    if(argsRef[i].equalsIgnoreCase("Name:")){
+                        name = argsRef[i+1];
+                    }
+                    if(argsRef[i].equalsIgnoreCase("ID:")){
+                        id = argsRef[i+1];
+                    }
+                }
+                StringBuilder sb = new StringBuilder();
+                for (int i = 1; i < args.length; i++) {
+                    sb.append(args[i]);
+                    if(i != args.length-1);
+                        sb.append(" ");
+                }
+                event.getJDA().getUserById(id).openPrivateChannel().complete().sendMessage(sb).queue();
+            }
+            else if(args[0].equalsIgnoreCase(ProbieBot.prefix + "senddm")){
+                String id = args[1];
+                StringBuilder sb = new StringBuilder();
+                for (int i = 2; i < args.length; i++) {
+                    sb.append(args[i]);
+                    if(i != args.length-1);
+                        sb.append(" ");
+                }
+                event.getJDA().getUserById(id).openPrivateChannel().complete().sendMessage(sb).queue();
             }
         }
     }
